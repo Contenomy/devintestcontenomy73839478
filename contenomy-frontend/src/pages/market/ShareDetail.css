@@ -1,0 +1,184 @@
+/* Sezione principale */
+.share-detail-container {
+  padding: 24px;
+  background-color: white; /* Colore di sfondo bianco */
+}
+
+.creator-card {
+  background: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 24px;
+  border-radius: 8px;
+  padding: 16px;
+  width: 97%;
+  height: 20%;
+  box-sizing: border-box;
+}
+
+.creator-card .MuiCardContent-root {
+  padding: 0;
+}
+
+
+
+/* Sezione dati creator e bio */
+.creator-summary-bio {
+  display: flex;
+  justify-content: space-between !important;
+  align-items: flex-start !important;
+  margin-bottom: 24px;
+  flex-wrap: nowrap;
+}
+
+/* Card principale */
+.main-card {
+  background: white;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  margin-bottom: 24px;
+}
+
+.main-card-content {
+  display: flex !important;
+  justify-content: space-between !important;
+  padding: 24px !important;
+}
+
+/* Sezione info creator */
+.creator-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.creator-image {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  margin-bottom: 8px;
+margin: 5px;  
+}
+
+.creator-info-text {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+
+.creator-name {
+  font-weight: 600;
+  font-size: 1.75rem !important;
+  margin-bottom: 4px !important;
+}
+
+.creator-metrics {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 8px;
+}
+
+.favorite-button {
+  color: #f59e0b !important;
+  padding: 4px 12px !important;
+  border: 1px solid #f59e0b !important;
+  margin-top: 8px !important;
+}
+
+/* Bio */
+.creator-bio {
+  background-color: #f59f0b8e;
+  padding: 16px;
+  border-radius: 8px;
+  margin-left: 24px;
+  width: 100%;
+  color: white;
+}
+
+
+.creator-bio .MuiButton-root {
+  color: #f59e0b;
+  padding: 0;
+  margin-top: 8px;
+  font-weight: 500;
+}
+
+.creator-bio .MuiTypography-body2 {
+  color: black;
+  line-height: 1.5;
+}
+
+.creator-bio .MuiButton-root {
+  color: #f59e0b;
+  margin-top: 8px;
+  padding: 0;
+  min-width: unset;
+  font-weight: 500;
+}
+
+
+/* Sezione grafico e acquisto/vendita */
+.chart-and-trade-section {
+  display: flex;
+  justify-content: flex-start; /* Mantiene gli elementi vicini */
+  align-items: flex-start !important;
+  flex-direction: row;
+  flex-wrap: nowrap; /* Evita il wrapping */
+  gap: 20px; /* Distanza tra grafico e sezione acquisto/vendita */
+}
+
+.chart-container {
+  flex: 3;
+  max-width: 70%; /* Limita la larghezza massima del grafico */
+}
+
+.buy-sell-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centra gli elementi */
+  width: 300px; /* Larghezza fissa */
+  margin-left: auto; /* Centra il container */
+  margin-right: auto; /* Centra il container */
+}
+
+
+.toggle-button-group button {
+  font-size: 12px;
+  padding: 4px 8px;
+}
+
+.buy-sell-section .MuiButton-outlined {
+  margin-top: 16px; /* Spazio sopra il bottone */
+  margin-bottom: 16px; /* Spazio sotto il bottone */
+  background-color: var(--cu-yellow600); /* Colore di sfondo */
+  border: 1px solid var(--cu-yellow600); /* Bordo giallo */
+  color: #f59e0b; /* Testo giallo */
+  font-weight: bold; /* Testo in grassetto */
+  width: 70%; /* Larghezza uguale alla card */
+  max-width:max-content;
+  display: block; /* Garantisce che occupi l'intera larghezza */
+}
+
+.buy-sell-section .MuiTextField-root {
+  margin-bottom: 16px;
+  color: white; /* Testo bianco */
+  background-color: #f59e0b;
+}
+
+.explore-order-book {
+  margin-top: 16px; /* Distanza dal bottone superiore */
+  width: 100%; /* Stessa larghezza della card */
+  background-color: var(--cu-yellow600); /* Sfondo coerente */
+  color: white; /* Testo bianco */
+  font-weight: bold; /* Testo in grassetto */
+  text-align: center; /* Centra il testo */
+  padding: 12px 0; /* Altezza uniforme */
+  border-radius: 4px; /* Bordi arrotondati */
+  border: 1px solid var(--cu-yellow600); /* Bordo coerente */
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); /* Ombra leggera */
+  display: block; /* Blocca la larghezza */
+}
+
+

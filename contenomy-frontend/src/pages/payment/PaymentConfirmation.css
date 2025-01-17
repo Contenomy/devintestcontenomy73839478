@@ -1,0 +1,39 @@
+.payment-confirmation {
+  text-align: center;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.confirmation-header, .error-header {
+  background-color: #00a0e3;
+  color: white;
+  padding: 10px;
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+.confirmation-body, .error-body {
+  margin-top: 30px;
+}
+
+.check-icon {
+  color: #4caf50;
+  font-size: 4em;
+  margin-bottom: 10px;
+}
+
+.error-icon {
+  color: #e74c3c;
+  font-size: 4em;
+  margin-bottom: 10px;
+}
+
+h2 {
+  font-size: 1.8em;
+  color: #333;
+}
+
+.payment-failure {
+  color: red;
+  margin-top: 30px;
+}

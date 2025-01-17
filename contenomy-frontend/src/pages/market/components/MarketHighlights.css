@@ -1,0 +1,189 @@
+.market-highlights {
+  margin-bottom: 20px;
+  padding: 0 20px;
+}
+
+.highlight-slide-container {
+  padding: 0 8px;
+}
+
+.highlight-card {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  margin: 10px;
+}
+
+.highlight-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.highlight-img-container {
+  height: 0;
+  padding-top: 5%;
+  position: relative;
+  overflow: hidden;
+  margin: 10px;
+  border-radius: 20px;
+}
+
+.highlight-img {
+  position: absolute;
+  top: 50;
+  left: 50;
+  width: 50%;
+  height: 50%;
+  object-fit: cover;
+  object-position: center;
+  transition: transform 0.3s ease;
+}
+
+.highlight-card:hover .highlight-img {
+  transform: scale(1.2);
+}
+
+.highlight-name {
+  font-size: 1rem;
+  font-weight: bold;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-bottom: 4px;
+}
+
+.highlight-price {
+  font-size: 0.9rem;
+  color: #666;
+  margin-bottom: 4px;
+}
+
+.highlight-trend {
+  font-weight: bold;
+  font-size: 0.85rem;
+}
+
+.highlight-trend.positive {
+  color: #4caf50;
+}
+
+.highlight-trend.negative {
+  color: #f44336;
+}
+
+.slick-slide {
+  opacity: 0.6;
+  transition: opacity 0.3s ease;
+}
+
+.slick-slide.slick-active {
+  opacity: 1;
+}
+
+.slick-list {
+  overflow: visible;
+}
+
+.slick-track {
+  display: flex !important;
+  align-items: center;
+}
+
+.slick-slide:not(.slick-active) {
+  filter: blur(2px);
+}
+
+@keyframes fadeInScale {
+  from {
+    opacity: 0.5;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.slick-slide.slick-active {
+  animation: fadeInScale 0.5s ease forwards;
+}
+
+.slick-prev,
+.slick-next {
+  z-index: 1;
+  width: 40px;
+  height: 40px;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 50%;
+  transition: background 0.3s ease;
+}
+
+.slick-prev:hover,
+.slick-next:hover {
+  background: rgba(255, 255, 255, 1);
+}
+
+.slick-prev:before,
+.slick-next:before {
+  color: #333;
+  font-size: 20px;
+}
+
+.slick-dots {
+  bottom: -25px;
+}
+
+.slick-dots li button:before {
+  font-size: 10px;
+  transition: all 0.3s ease;
+}
+
+.slick-dots li.slick-active button:before {
+  transform: scale(1.2);
+}
+
+
+
+/*intercetto le classi di MUI e intervengo sul padding delle card:
+
+
+/* Aggiusta il padding per tutte le CardContent */
+.css-46bh2p-MuiCardContent-root {
+  padding: 10px !important; /* Riduci il padding generale */
+}
+
+/* Aggiusta il padding per l'ultimo elemento CardContent */
+.css-46bh2p-MuiCardContent-root:last-child {
+  padding-bottom: 50px !important; /* Riduci il padding inferiore */
+}
+
+/* Se vuoi essere più specifico e assicurarti che queste regole si applichino solo alle card nello slider, puoi aggiungere un selettore più specifico */
+.market-highlights .highlight-card .css-46bh2p-MuiCardContent-root {
+  padding-left: 10px !important;
+  padding-top: 1px !important;
+  margin-top: 1px !important;
+}
+
+.market-highlights .highlight-card .css-46bh2p-MuiCardContent-root:last-child {
+  padding-bottom: 8px !important;
+}
+
+/* Aggiusta lo spazio intorno al contenuto della card */
+.highlight-card .MuiCardContent-root {
+  padding: 1px;
+}
+
+/* Riduci lo spazio tra gli elementi all'interno della card */
+.highlight-card .MuiCardContent-root > * {
+  margin-bottom: 1px;
+}
+
+/* Rimuovi il margine dall'ultimo elemento nella card */
+.highlight-card .MuiCardContent-root > *:last-child {
+  margin-bottom: 0px;
+}

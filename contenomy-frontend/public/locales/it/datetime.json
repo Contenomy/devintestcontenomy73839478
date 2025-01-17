@@ -1,0 +1,8 @@
+{
+	"date": {
+        "value": "{{ value, dd/MM/yyyy }}",
+		"with": {
+            "time": "{{ value, dd/MM/yyyy HH:mm:ss }}"
+        }
+	}
+}

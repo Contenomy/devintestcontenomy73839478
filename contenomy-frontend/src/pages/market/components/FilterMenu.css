@@ -1,0 +1,12 @@
+.filter-menu {
+    margin-left: 10px;
+  }
+  
+  .MuiButton-root {
+    background-color: #024089;
+    color: white;
+  }
+  
+  .MuiButton-root:hover {
+    background-color: #012c5e;
+  }

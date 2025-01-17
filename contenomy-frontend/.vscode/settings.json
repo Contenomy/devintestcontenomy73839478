@@ -1,0 +1,8 @@
+{
+    "i18n-ally.localesPaths": [
+        "public/locales"
+    ],
+    "i18n-ally.keystyle": "flat",
+    "i18n-ally.defaultNamespace": "translation",
+    "i18n-ally.namespace": true
+}

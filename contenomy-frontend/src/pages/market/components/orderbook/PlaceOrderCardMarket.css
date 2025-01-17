@@ -1,0 +1,72 @@
+/* Stili per il componente PlaceOrderCardMarket */
+
+/* Card principale */
+.market-order-card {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    padding: 16px;
+  }
+  
+  /* Titolo della card */
+  .market-order-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 16px;
+  }
+  
+  /* Contenitore per lo switch */
+  .market-order-switch-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+  }
+  
+  /* Stile per lo switch */
+.market-order-switch .MuiSwitch-switchBase {
+  color: #f59e0b;
+}
+
+.market-order-switch .MuiSwitch-switchBase.Mui-checked {
+  color: #f59e0b !important;
+}
+
+.market-order-switch .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track,
+.market-order-switch .MuiSwitch-track {
+  background-color: #f59e0b !important;
+  opacity: 0.5;
+}
+
+.market-order-switch .MuiSwitch-thumb {
+  background-color: #f59e0b !important;
+}
+  
+  /* Campo di input per la quantità */
+  .market-order-quantity {
+    margin-bottom: 16px;
+  }
+  
+  /* Stile per il totale */
+  .market-order-total {
+    font-weight: bold;
+    margin-bottom: 16px;
+  }
+  
+  /* Pulsante di invio ordine */
+  .market-order-submit {
+    background-color: #f59e0b !important;
+    color: #ffffff;
+    width: 100%!important;
+  }
+  
+  .market-order-submit:hover {
+    background-color: #f59f0bb2;
+  }
+  
+  /* Messaggio di errore */
+  .market-order-error {
+    color: #ff0000;
+    margin-top: 8px;
+  }

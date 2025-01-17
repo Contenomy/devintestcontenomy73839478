@@ -1,0 +1,44 @@
+{
+    "app_name": "Contenomy",
+    "profile": "Profilo",
+    "register": "Registrati",
+    "name": "Nome",
+    "price": "Prezzo",
+    "market.cap": "Cap di mercato",
+    "market.trend.last_24h": "Ultime 24h",
+    "prize": "Premio",
+    "wallet": "Portafoglio di {{ user }}",
+    "amount": "Quantità",
+    "creator": "Creator",
+    "value": "Valore",
+    "values.notpresent": "Nessun dato disponibile",
+    "common": {
+    "cancel": "Annulla",
+    "confirm": "Conferma"
+    },
+    "walletpage": {
+        "investmentSummary": "Riepilogo degli investimenti",
+        "totalInvested": "Totale investito",
+        "withdraw": "Preleva",
+        "recharge": "Ricarica",
+        "selectCard": "Seleziona una carta",
+        "cardNumber": "Numero carta",
+        "cardNumberPH": "Numero carta",
+        "expirationDate": "Data di scadenza",
+        "expirationDatePH": "MM/AA",
+        "ccv": "Cvv",
+        "ccvPH": "CVV 3-4 cifre",
+        "addNewCardDetails":"Inserisci dettagli carta",
+        "addNewCard":"Aggiungi nuova carta",
+        "addNewCardTitle":"Aggiungi una carta di credito o di debito",
+        "errorInvalidAmount":"Valore importo non valido",
+        "titolare": "Nome del titolare sulla carta",
+        "titolarePH": "Nome e cognome",
+        "amount": "Importo",
+        "labelimporto":"Importo ricarica",
+        "errorAmountExceeds": "L'importo non può superare il totale disponibile di {{totalValue}}."
+    },
+    "number": {
+        "currency": "{{value}} €"
+    }
+}

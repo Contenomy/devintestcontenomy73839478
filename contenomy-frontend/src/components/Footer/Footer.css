@@ -1,0 +1,32 @@
+footer.contenomy-footer {
+    background-color: #172039;
+    @apply p-5 text-white;
+    text-align: center;
+    margin-top: auto; /* Spinge il footer in fondo */
+}
+
+.footer-links {
+    @apply flex justify-center space-x-12 mb-4;
+    justify-content: space-around; /* Dispone i link in orizzontale e aggiunge spazio orizzontale */
+    margin: 2rem;
+}
+
+.footer-links div {
+    @apply flex flex-col space-y-2; /* Dispone i link in colonna e aggiunge spazio verticale */
+}
+
+.footer-link {
+    color: #ffffff;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer-link:hover {
+    color: #f0f0f0; /* Leggero cambiamento di colore all'hover */
+}
+
+.footer-bottom {
+    @apply mt-4;
+    font-size: 14px;
+    color: #b0b0b0;
+}

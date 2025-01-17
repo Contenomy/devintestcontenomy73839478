@@ -1,0 +1,33 @@
+.c-popup {
+	border: 2px solid rgb(100, 100, 100);
+	border-radius: 10px;
+
+	width: 50%;
+	height: 50%;
+
+	z-index: 1000;
+	background-color: #fffaf5;
+
+	@apply absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2;
+
+	& .c-popup-title {
+		@apply flex p-4;
+
+		& .MuiIconButton-root {
+			@apply ml-auto;
+		}
+
+		border-bottom: 1px solid rgb(128, 128, 128);
+	}
+
+	& .c-popup-content {
+		@apply p-4;
+	}
+}
+
+.c-overlay {
+	background-color: rgba(0, 0, 0, 0.4);
+	z-index: 999;
+
+	@apply absolute top-0 bottom-0 left-0 right-0;
+}

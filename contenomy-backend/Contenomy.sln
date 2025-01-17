@@ -1,0 +1,88 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34031.279
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Contenomy.API", "Contenomy.API\Contenomy.API.csproj", "{236FCC63-7EE2-4802-90C7-ED962C066A19}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Contenomy.Data", "Contenomy.Data\Contenomy.Data.csproj", "{4E5D04FB-53D5-4C9A-A99D-C8DFAE7B4CCF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Socials", "Socials", "{CC25FEE6-A694-4940-94E9-F0808E3843EA}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Contenomy.SocialNetwork", "Contenomy.SocialNetwork\Contenomy.SocialNetwork.csproj", "{903F865E-FF78-407E-90B6-C643A9FDF17E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Contenomy.API.Shared", "Contenomy.Shared\Contenomy.API.Shared.csproj", "{17D08CDA-AE35-489F-A45B-E97BE285F88A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Contenomy.Data.Influx", "Contenomy.Data.Influx\Contenomy.Data.Influx.csproj", "{D8873C29-03AF-49BB-844A-759CCF1C8784}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Elementi di soluzione", "Elementi di soluzione", "{8D7DFFD0-B373-4630-B3EB-9DB195930060}"
+	ProjectSection(SolutionItems) = preProject
+		Nuget.Config = Nuget.Config
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Contenomy.SocialNetwork.YouTube", "Socials\Contenomy.SocialNetwork.YouTube\Contenomy.SocialNetwork.YouTube.csproj", "{FC309E70-F1F9-481C-9D6E-B2111DE4EE66}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{274C0143-8EB5-4032-9D02-04FBB40571A2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Contenomy.Test.SocialNetwork", "Test\Contenomy.Test.SocialNetwork\Contenomy.Test.SocialNetwork.csproj", "{46A1D31F-C4A5-44D9-9B5F-53BBFD2EA18B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Contenomy.Email", "Contenomy.Email\Contenomy.Email.csproj", "{4839EE76-2A59-4355-9B0D-5E22C1D70241}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Contenomy.Data.Influx.Test", "Test\Contenomy.Data.Influx.Test\Contenomy.Data.Influx.Test.csproj", "{1C540284-A87D-49A5-8217-4305D35CF694}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{236FCC63-7EE2-4802-90C7-ED962C066A19}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{236FCC63-7EE2-4802-90C7-ED962C066A19}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{236FCC63-7EE2-4802-90C7-ED962C066A19}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{236FCC63-7EE2-4802-90C7-ED962C066A19}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4E5D04FB-53D5-4C9A-A99D-C8DFAE7B4CCF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4E5D04FB-53D5-4C9A-A99D-C8DFAE7B4CCF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4E5D04FB-53D5-4C9A-A99D-C8DFAE7B4CCF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4E5D04FB-53D5-4C9A-A99D-C8DFAE7B4CCF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{903F865E-FF78-407E-90B6-C643A9FDF17E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{903F865E-FF78-407E-90B6-C643A9FDF17E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{903F865E-FF78-407E-90B6-C643A9FDF17E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{903F865E-FF78-407E-90B6-C643A9FDF17E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{17D08CDA-AE35-489F-A45B-E97BE285F88A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{17D08CDA-AE35-489F-A45B-E97BE285F88A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{17D08CDA-AE35-489F-A45B-E97BE285F88A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{17D08CDA-AE35-489F-A45B-E97BE285F88A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D8873C29-03AF-49BB-844A-759CCF1C8784}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D8873C29-03AF-49BB-844A-759CCF1C8784}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D8873C29-03AF-49BB-844A-759CCF1C8784}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D8873C29-03AF-49BB-844A-759CCF1C8784}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FC309E70-F1F9-481C-9D6E-B2111DE4EE66}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FC309E70-F1F9-481C-9D6E-B2111DE4EE66}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FC309E70-F1F9-481C-9D6E-B2111DE4EE66}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FC309E70-F1F9-481C-9D6E-B2111DE4EE66}.Release|Any CPU.Build.0 = Release|Any CPU
+		{46A1D31F-C4A5-44D9-9B5F-53BBFD2EA18B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{46A1D31F-C4A5-44D9-9B5F-53BBFD2EA18B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{46A1D31F-C4A5-44D9-9B5F-53BBFD2EA18B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{46A1D31F-C4A5-44D9-9B5F-53BBFD2EA18B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4839EE76-2A59-4355-9B0D-5E22C1D70241}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4839EE76-2A59-4355-9B0D-5E22C1D70241}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4839EE76-2A59-4355-9B0D-5E22C1D70241}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4839EE76-2A59-4355-9B0D-5E22C1D70241}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1C540284-A87D-49A5-8217-4305D35CF694}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1C540284-A87D-49A5-8217-4305D35CF694}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1C540284-A87D-49A5-8217-4305D35CF694}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1C540284-A87D-49A5-8217-4305D35CF694}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{903F865E-FF78-407E-90B6-C643A9FDF17E} = {CC25FEE6-A694-4940-94E9-F0808E3843EA}
+		{FC309E70-F1F9-481C-9D6E-B2111DE4EE66} = {CC25FEE6-A694-4940-94E9-F0808E3843EA}
+		{46A1D31F-C4A5-44D9-9B5F-53BBFD2EA18B} = {274C0143-8EB5-4032-9D02-04FBB40571A2}
+		{1C540284-A87D-49A5-8217-4305D35CF694} = {274C0143-8EB5-4032-9D02-04FBB40571A2}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D60B2681-C960-41B1-A54C-CAECA50108DC}
+	EndGlobalSection
+EndGlobal

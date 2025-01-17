@@ -1,0 +1,83 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+	font-family: "Gabarito";
+	src: url("../public/fonts/Gabarito/Gabarito-Black.ttf");
+	font-weight: 900;
+}
+@font-face {
+	font-family: "Gabarito";
+	src: url("../public/fonts/Gabarito/Gabarito-ExtraBold.ttf");
+	font-weight: 800;
+}
+@font-face {
+	font-family: "Gabarito";
+	src: url("../public/fonts/Gabarito/Gabarito-Bold.ttf");
+	font-weight: 700;
+}
+@font-face {
+	font-family: "Gabarito";
+	src: url("../public/fonts/Gabarito/Gabarito-SemiBold.ttf");
+	font-weight: 600;
+}
+@font-face {
+	font-family: "Gabarito";
+	src: url("../public/fonts/Gabarito/Gabarito-Medium.ttf");
+	font-weight: 500;
+}
+@font-face {
+	font-family: "Gabarito";
+	src: url("../public/fonts/Gabarito/Gabarito-Regular.ttf");
+	font-weight: 400;
+}
+:root {
+	--foreground-rgb: rgb(0, 0, 0);
+	--background-start-rgb: #ffffff;
+}
+
+/* @media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: rgb(255, 255, 255);
+    --background-start-rgb: rgb(0, 0, 0);
+  }
+} */
+
+body {
+	@apply m-0;
+
+	color: var(--foreground-rgb);
+	background: var(--background-start-rgb);
+
+	& * {
+    font-family: "Gabarito", sans-serif !important;
+	}
+}
+
+.w-100 {
+	width: 100%;
+}
+
+.MuiButton-root {
+	background-color: #024089;
+	
+	@apply cursor-pointer shadow-none
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+#root, .container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+main {
+    flex: 1;
+}

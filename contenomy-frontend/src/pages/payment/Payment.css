@@ -1,0 +1,163 @@
+
+.saved-card-option {
+  display: flex;
+  align-items: center;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 10px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  transition: border-color 0.3s;
+}
+
+.saved-card-option.selected {
+  border-color: #007bff;
+  background-color: #f0f8ff;
+}
+
+.radio-input {
+  margin-right: 15px;
+  cursor: pointer;
+}
+
+.label_card {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  align-items: center;
+}
+
+.card-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.card-type {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.status-badge {
+  display: inline-block;
+  margin-left: 10px;
+  padding: 1px 5px;
+  font-size: 0.8em;
+  border-radius: 4px;
+  color: white;
+}
+
+.status-badge.valid {
+  background-color: #4caf50; /* verde per le carte valide */
+}
+
+.status-badge.invalid {
+  background-color: #e74c3c; /* rosso per le carte non valide */
+}
+
+
+
+
+
+.payment-summary {
+  max-width: 400px;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #fff;
+}
+
+.order-summary {
+  margin-bottom: 20px;
+}
+
+.order-item,
+.order-total {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.pay-button {
+  width: 100%;
+  padding: 12px;
+  background-color: #28a745;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.secure-payment {
+  font-size: 12px;
+  color: #666;
+  text-align: center;
+  margin-top: 10px;
+}
+
+.card-details label {
+  font-size: 14px;
+  margin-top: 10px;
+  display: block;
+}
+
+.card-details input {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.save-card {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.save-card label {
+  font-size: 14px;
+  margin-left: 8px;
+}
+
+.cancel-button {
+  background: none;
+  border: none;
+  color: #007bff;
+  cursor: pointer;
+}
+
+
+.btnPaga
+{
+  width: 100%;
+  float: left;
+}
+.btnAnnulla
+{
+  width: 100%;
+  float: left;
+  padding-left: 0px;
+  margin-left: 0px;
+}
+
+
+.modal-dialog
+{
+min-width: 580px;
+}
+
+.riga_totale
+{
+    border-top: 1px solid #dee2e6;
+}
+
+.pad_t_4
+{
+    padding-top: 4px;
+}
+
+.tot_left {
+  text-align: right;
+  width: 60%;
+}

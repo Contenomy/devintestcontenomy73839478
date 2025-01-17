@@ -1,0 +1,85 @@
+@tailwind base;
+
+/* Stili per le voci della lista */
+.MuiListItem-root {
+	& p {
+		@apply text-center;
+	}
+
+	.shareList & {
+		&:hover {
+			filter: brightness(80%);
+			@apply bg-gray-500 bg-opacity-10 cursor-pointer;
+		}
+
+		@apply mt-5 transition ease-in-out;
+	}
+}
+
+/* Stili per il container dello slider */
+.market-page {
+	@apply w-full px-8 py-5;
+}
+
+/* Stili per la card nel market slider */
+.market-card {
+	@apply bg-white shadow-md rounded-lg overflow-hidden transition-all duration-300 ease-in-out;
+}
+
+.market-card:hover {
+	transform: scale(1.05);
+}
+
+.market-card-img {
+	width: 100%;
+	height: 150px;
+	object-fit: cover;
+}
+
+.market-card-info {
+	@apply p-4 text-center;
+}
+
+.market-card-name {
+	@apply text-xl font-semibold mb-2;
+}
+
+.market-card-price {
+	@apply text-lg font-medium text-gray-700;
+}
+
+.market-card-trend {
+	@apply text-green-500;
+}
+
+/* Stili per le frecce dello slider */
+.slick-arrow {
+	background-color: #024089;
+	border-radius: 50%;
+	width: 40px;
+	height: 40px;
+	z-index: 1;
+}
+
+.slick-prev {
+	left: -45px;
+}
+
+.slick-next {
+	right: -45px;
+}
+
+.slick-arrow::before {
+	content: '';
+	font-size: 20px;
+	color: white;
+}
+
+/* Dots sotto lo slider */
+.slick-dots li button:before {
+	@apply text-gray-500;
+}
+
+.slick-dots li.slick-active button:before {
+	@apply text-blue-500;
+}

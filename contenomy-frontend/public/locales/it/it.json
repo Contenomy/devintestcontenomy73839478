@@ -1,0 +1,18 @@
+{
+  "common": {
+    "cancel": "Annulla",
+    "confirm": "Conferma"
+  },
+  "wallet": {
+    "investmentSummary": "Riepilogo degli investimenti",
+    "totalInvested": "Totale investito",
+    "withdraw": "Preleva",
+    "recharge": "Ricarica",
+    "selectCard": "Seleziona una carta",
+    "amount": "Importo",
+    "errorAmountExceeds": "L'importo non può superare il totale disponibile di {{totalValue}}."
+  },
+  "number": {
+    "currency": "{{value}} €"
+  }
+}

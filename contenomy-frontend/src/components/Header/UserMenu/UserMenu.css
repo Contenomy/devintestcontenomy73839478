@@ -1,0 +1,6 @@
+.profileLink {
+    color: inherit;
+    text-decoration: none;
+
+    @apply flex items-center;
+}

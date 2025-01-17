@@ -1,0 +1,38 @@
+
+
+.share-detail-container.order-book-container {
+  padding: 24px;
+  background-color: #f8f8f8;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.order-book-card {
+  background-color: black;
+  color: white;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.chart-container {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+@media (max-width: 960px) {
+  .order-book-card {
+    order: 2;
+  }
+  
+  .chart-container {
+    order: 1;
+  }
+}
+
+
+
+/* Questo file CSS definisce lo stile generale per la pagina del libro ordini.
+   Include stili per il layout responsive, assicurando che il grafico rimanga in alto
+   e le tabelle degli ordini si spostino sotto su schermi più piccoli. */

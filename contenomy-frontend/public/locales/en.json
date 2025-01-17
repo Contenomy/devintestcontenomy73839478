@@ -1,0 +1,18 @@
+{
+  "common": {
+    "cancel": "Cancel",
+    "confirm": "Confirm"
+  },
+  "wallet": {
+    "investmentSummary": "Investment Summary",
+    "totalInvested": "Total Invested",
+    "withdraw": "Withdraw",
+    "recharge": "Recharge",
+    "selectCard": "Select a card",
+    "amount": "Amount",
+    "errorAmountExceeds": "The amount cannot exceed the available total of {{totalValue}}."
+  },
+  "number": {
+    "currency": "{{value}} €"
+  }
+}

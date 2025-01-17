@@ -1,0 +1,20 @@
+.search-bar {
+  max-width: 250px;
+  margin-left: auto;
+  color: #f59e0b;
+}
+
+.MuiOutlinedInput-root {
+  background-color: white;
+  color: #f59e0b;
+}
+
+.yellow-icon {
+  color: #f59e0b; /* Colore giallo per l'icona */
+}
+
+.no-results-message {
+  margin-top: 10px;
+  color: #666;
+  font-style: italic;
+}

@@ -1,0 +1,5 @@
+{
+	"currency": "{{ value, currency(EUR) }}",
+	"percent": "{{ value, number(minimumFractionDigits: 2) }}%",
+	"decimal": "{{ value, number(minimumFractionDigits: 2) }}"
+}

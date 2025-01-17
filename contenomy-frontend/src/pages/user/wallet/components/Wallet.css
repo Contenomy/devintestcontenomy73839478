@@ -1,0 +1,95 @@
+.wallet-container {
+    padding: 24px;
+    background-color: #f5f5f5;
+  }
+  
+  .highlights {
+    background-color: #333;
+    color: white;
+    padding: 16px;
+    border-radius: 8px;
+    margin-bottom: 24px;
+  }
+  
+  .highlights-content {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .highlight-item {
+    text-align: center;
+  }
+  
+  .highlight-value {
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
+  .content-shares {
+    background-color: white;
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 24px;
+  }
+  
+  .content-shares-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .content-shares-table th,
+  .content-shares-table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+  }
+  
+  .content-shares-table th {
+    font-weight: bold;
+  }
+  
+  .positive-value {
+    color: #4caf50;
+  }
+  
+  .negative-value {
+    color: #f44336;
+  }
+  
+  .event-history {
+    background-color: white;
+    border-radius: 8px;
+    padding: 16px;
+  }
+  
+  .event-history-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .event-history-table th,
+  .event-history-table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+  }
+  
+  .event-history-table th {
+    font-weight: bold;
+  }
+  
+  .event-icon {
+    font-size: 20px;
+  }
+  
+  .event-icon-buy {
+    color: #f44336;
+  }
+  
+  .event-icon-sell {
+    color: #4caf50;
+  }
+  
+  .event-icon-reward {
+    color: #ffc107;
+  }

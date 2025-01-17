@@ -1,0 +1,50 @@
+header.contenomy-header {
+    background-color: white; /* Sfondo bianco */
+    box-shadow: 0 0px 10px rgb(0, 0, 0, 1);
+    @apply w-full flex sticky top-0 z-50;
+}
+
+.contenomy-header .MuiButton-root {
+    @apply transition shadow-none brightness-100 duration-500 ease-in-out p-3 hover:brightness-150 hover:shadow-none rounded-none;
+    color: black; /* Colore del testo nero */
+    background-color: white; /* Sfondo bianco per tutti i bottoni */
+    font-size: 16px; /* Stessa grandezza del font per tutti i bottoni */
+    text-transform: none; /* Mantiene la capitalizzazione come nel JSX */
+    display: flex;
+    align-items: center; /* Allinea verticalmente al centro */
+    text-decoration: none; /* Rimuove la sottolineatura */
+}
+
+.contenomy-header .MuiButton-root:hover {
+    background-color: white; /* Mantiene lo sfondo bianco all'hover */
+    text-decoration: underline; /* Sottolineatura del testo all'hover */
+}
+
+.nav-link {
+    color: black; /* Colore del testo per i link */
+    background-color: white; /* Sfondo bianco per i link */
+    padding: 8px 16px;
+    border-radius: 4px; /* Arrotondamento per i bordi */
+    font-size: 16px; /* Stessa grandezza del font per i link */
+    text-transform: none; /* Mantiene la capitalizzazione come nel JSX */
+    transition: text-decoration 0.3s ease;
+    display: flex;
+    align-items: center; /* Allinea verticalmente al centro */
+    text-decoration: none; /* Rimuove la sottolineatura */
+}
+
+.nav-link:hover {
+    text-decoration: underline; /* Sottolineatura del testo all'hover */
+    background-color: white; /* Mantiene lo sfondo bianco all'hover */
+}
+
+.nav-link, .NavLink .MuiButton-root {
+    font-family: inherit; /* Eredita il font dal contesto */
+    font-weight: normal; /* Assicura che il peso del font sia lo stesso */
+    font-size: 16px; /* Mantiene la stessa dimensione del font */
+    text-transform: none; /* Mantiene la capitalizzazione come definita */
+    text-decoration: none; /* Rimuove eventuali sottolineature */
+    color: black; /* Colore del testo */
+    display: flex;
+    align-items: center;
+}

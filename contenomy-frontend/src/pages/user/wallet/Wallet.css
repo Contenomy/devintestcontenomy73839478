@@ -1,0 +1,13 @@
+.wallet-container {
+    padding: 24px;
+    background-color: #f5f5f5;
+  }
+  
+  .wallet-content {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+  
+ 
+  /* Questo file CSS contiene gli stili per la pagina del portafoglio e i suoi componenti. */
