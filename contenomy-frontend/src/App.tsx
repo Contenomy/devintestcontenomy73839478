@@ -4,6 +4,7 @@ import "./index.css";
 import Header from "@components/Header";
 import Footer from "@components/Footer";
 import { AuthProvider, DEFAULT_PROFILE } from "@context/AuthContext";
+import { ProductProvider } from "@context/ProductContext";
 import IUserProfile from "@model/UserProfile";
 import AuthService from "./services/AuthService";
 import RatingWidget from "@components/RatingWidget";
@@ -87,8 +88,9 @@ export default function App() {
     <BrowserRouter>
       <AuthProvider value={{ profile, setProfile }}>
         <Header />
-        <main id="main-content" className="m-2">
-          <Routes>
+        <ProductProvider>
+          <main id="main-content" className="m-2">
+            <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
@@ -117,7 +119,8 @@ export default function App() {
             <Route path="/wallet/PaymentConfirmation" element={<WalletPaymentConfirmation />} />
             <Route path="/wallet/CheckRegistration" element={<WalletCheckRegistration />} />
           </Routes>
-        </main>
+          </main>
+        </ProductProvider>
         <Footer />
         {showRating && (
           <RatingWidget
