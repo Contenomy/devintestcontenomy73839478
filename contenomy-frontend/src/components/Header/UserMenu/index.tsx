@@ -1,5 +1,5 @@
 import { authContext } from "@context/AuthContext";
-import { AccountCircle, LogoutRounded, Wallet, Dashboard, AddCircleOutline, Share, Settings } from "@mui/icons-material";
+import { AccountCircle, LogoutRounded, Wallet, Dashboard, AddCircleOutline, Share, Settings, ShoppingCart } from "@mui/icons-material";
 import { Button, Menu, MenuItem } from "@mui/material";
 import AuthService from "@service/AuthService";
 import { useContext, useState } from "react";
@@ -69,6 +69,12 @@ export default function UserMenu() {
 					<Link className="profileLink" to="/wallet">
 						<Wallet className="mr-2" />
 						{t("Wallet")}
+					</Link>
+				</MenuItem>
+				<MenuItem>
+					<Link className="profileLink" to="/shop">
+						<ShoppingCart className="mr-2" />
+						{t("Shop")}
 					</Link>
 				</MenuItem>
 				<MenuItem>
