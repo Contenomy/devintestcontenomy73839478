@@ -36,6 +36,7 @@ import ManageRewards from '@pages/manage-rewards';
 
 import CreatorInfo from '@pages/creator-info';
 import Shop from '@pages/shop';
+import SellProductsServices from '@pages/shop/sell-products-services';
 
 export default function App() {
   const [profile, setProfile] = useState<IUserProfile>(DEFAULT_PROFILE.profile);
@@ -104,6 +105,7 @@ export default function App() {
             <Route path="/manage-rewards" element={<ManageRewards />} />
             <Route path="/creator-info" element={<CreatorInfo />} />
             <Route path="/shop" element={<Shop />} />
+            <Route path="/shop/sell-products-services" element={<SellProductsServices />} />
             <Route path="/payment" element={<Payment />} />
             <Route path="/payment/PaymentConfirmation" element={<PaymentConfirmation />} />
             <Route path="/payment/TransferConfirmation" element={<TransferConfirmation />} />
