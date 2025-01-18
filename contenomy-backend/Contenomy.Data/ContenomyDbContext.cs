@@ -19,7 +19,7 @@ namespace Contenomy.Data
         {
             if (!optionsBuilder.IsConfigured)
             {
-                throw new InvalidOperationException("Database connection string not configured. Please check your configuration.");
+                optionsBuilder.UseNpgsql("Host=localhost;Database=contenomy;Username=postgres;Password=iot");
             }
             optionsBuilder.EnableSensitiveDataLogging();
             base.OnConfiguring(optionsBuilder);
