@@ -362,6 +362,12 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 /Iperceramica/BMPolytec.WebApp_144_256_257/Controllers/RecipeController.cs
+
+# Development files
+cookies.txt
+**/C:\\Logs\\**
+*.log
+appsettings.Development.json
 # IDE
 .vs/
 .vscode/
