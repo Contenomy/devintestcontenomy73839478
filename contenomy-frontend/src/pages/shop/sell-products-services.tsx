@@ -52,30 +52,38 @@ export default function SellProductsServices() {
     setSelectedProduct(null);
   };
 
-  const handleAddProduct = (data: ProductFormData) => {
-    if (selectedProduct) {
-      // Edit mode - update existing product
-      setProducts(prev => prev.map(product => 
-        product.id === selectedProduct.id 
-          ? {
-              ...product,
-              ...data,
-              immagine: data.immagine && data.immagine.length > 0 
-                ? URL.createObjectURL(data.immagine[0]) 
-                : product.immagine
-            }
-          : product
-      ));
-    } else {
-      // Create mode - add new product
-      const newProduct: Product = {
-        ...data,
-        id: Date.now().toString(),
-        immagine: data.immagine && data.immagine.length > 0 ? URL.createObjectURL(data.immagine[0]) : undefined
-      };
-      setProducts(prev => [...prev, newProduct]);
+  // TODO: Replace with actual API endpoint when backend is ready
+  const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || '';
+  
+  const handleAddProduct = async (data: ProductFormData) => {
+    try {
+      if (selectedProduct) {
+        // Edit mode - update existing product
+        setProducts(prev => prev.map(product => 
+          product.id === selectedProduct.id 
+            ? {
+                ...product,
+                ...data,
+                immagine: data.immagine && data.immagine.length > 0 
+                  ? URL.createObjectURL(data.immagine[0]) 
+                  : product.immagine
+              }
+            : product
+        ));
+      } else {
+        // Create mode - add new product
+        const newProduct: Product = {
+          ...data,
+          id: Date.now().toString(),
+          immagine: data.immagine && data.immagine.length > 0 ? URL.createObjectURL(data.immagine[0]) : undefined
+        };
+        setProducts(prev => [...prev, newProduct]);
+      }
+      handleCloseDialog();
+    } catch (error) {
+      console.error('Error handling product:', error);
+      // TODO: Add proper error handling when backend is implemented
     }
-    handleCloseDialog();
   };
 
   const handleDeleteProduct = () => {
