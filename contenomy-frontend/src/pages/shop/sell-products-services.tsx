@@ -1,16 +1,214 @@
-import React from "react";
-import { Box, Typography } from "@mui/material";
+import React, { useState } from "react";
+import { 
+  Box, 
+  Typography, 
+  Button,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  TextField,
+  Grid
+} from "@mui/material";
+import { useForm, SubmitHandler } from "react-hook-form";
+
+interface ProductFormData {
+  titolo: string;
+  descrizione: string;
+  immagine?: FileList;
+  prezzo: number;
+  disponibilita: number;
+}
+
+interface Product extends Omit<ProductFormData, 'immagine'> {
+  immagine?: string;
+  id: string;
+}
 
 export default function SellProductsServices() {
+  const [openDialog, setOpenDialog] = useState(false);
+  const [products, setProducts] = useState<Product[]>([]);
+
+  const handleOpenDialog = () => setOpenDialog(true);
+  const handleCloseDialog = () => setOpenDialog(false);
+
+  const handleAddProduct = (data: ProductFormData) => {
+    const newProduct: Product = {
+      ...data,
+      id: Date.now().toString(),
+      immagine: data.immagine && data.immagine.length > 0 ? URL.createObjectURL(data.immagine[0]) : undefined
+    };
+    setProducts(prev => [...prev, newProduct]);
+    handleCloseDialog();
+  };
+
+  function AddProductDialog() {
+    const { register, handleSubmit, formState: { errors } } = useForm<ProductFormData>();
+    
+    const onSubmit: SubmitHandler<ProductFormData> = (data) => {
+      handleAddProduct(data);
+    };
+
+    return (
+      <Dialog open={openDialog} onClose={handleCloseDialog} maxWidth="sm" fullWidth>
+        <DialogTitle>Nuovo prodotto</DialogTitle>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <DialogContent>
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <TextField
+                  fullWidth
+                  label="Titolo"
+                  error={!!errors.titolo}
+                  helperText={errors.titolo ? "Campo richiesto" : ""}
+                  {...register("titolo", { required: true })}
+                />
+              </Grid>
+              
+              <Grid item xs={12}>
+                <TextField
+                  fullWidth
+                  multiline
+                  rows={3}
+                  label="Descrizione"
+                  error={!!errors.descrizione}
+                  helperText={errors.descrizione ? "Campo richiesto" : ""}
+                  {...register("descrizione", { required: true })}
+                />
+              </Grid>
+              
+              <Grid item xs={12}>
+                <TextField
+                  fullWidth
+                  type="file"
+                  InputLabelProps={{ shrink: true }}
+                  label="Immagine"
+                  {...register("immagine")}
+                />
+              </Grid>
+              
+              <Grid item xs={6}>
+                <TextField
+                  fullWidth
+                  type="number"
+                  label="Prezzo in euro"
+                  error={!!errors.prezzo}
+                  helperText={errors.prezzo ? "Campo richiesto" : ""}
+                  {...register("prezzo", { 
+                    required: true,
+                    valueAsNumber: true,
+                    min: 0
+                  })}
+                />
+              </Grid>
+              
+              <Grid item xs={6}>
+                <TextField
+                  fullWidth
+                  type="number"
+                  label="Disponibilità"
+                  error={!!errors.disponibilita}
+                  helperText={errors.disponibilita ? "Campo richiesto (max 10)" : ""}
+                  {...register("disponibilita", { 
+                    required: true,
+                    valueAsNumber: true,
+                    min: 0,
+                    max: 10
+                  })}
+                />
+              </Grid>
+            </Grid>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleCloseDialog}>Annulla</Button>
+            <Button type="submit" variant="contained" color="primary">
+              Salva prodotto
+            </Button>
+          </DialogActions>
+        </form>
+      </Dialog>
+    );
+  }
+
   return (
     <Box sx={{ p: 3 }}>
-      <Typography variant="h4" gutterBottom>
-        Vendi prodotti e servizi
-      </Typography>
-      <Typography variant="body1">
+      <Box display="flex" justifyContent="space-between" alignItems="center" sx={{ mb: 3 }}>
+        <Typography variant="h4">
+          Vendi prodotti e servizi
+        </Typography>
+        <Button 
+          variant="contained"
+          color="success" 
+          onClick={handleOpenDialog}
+        >
+          Inserisci
+        </Button>
+      </Box>
+      <Typography variant="body1" gutterBottom>
         Vendere prodotti e servizi aiuta a ridurre la disponibilità delle tue supportshare
         e quindi a farle crescere di valore
       </Typography>
+
+      {/* Lista dei prodotti */}
+      <Box sx={{ mt: 4 }}>
+        {products.length === 0 ? (
+          <Typography variant="body1" color="textSecondary" align="center">
+            Nessun prodotto disponibile. Usa il pulsante "Inserisci" per aggiungere prodotti.
+          </Typography>
+        ) : (
+          products.map((product) => (
+            <Box
+              key={product.id}
+              sx={{
+                border: '1px solid #e0e0e0',
+                borderRadius: 1,
+                p: 2,
+                mb: 2,
+                '&:hover': {
+                  boxShadow: 1
+                }
+              }}
+            >
+              <Grid container spacing={2}>
+                {product.immagine && (
+                  <Grid item xs={12} sm={3}>
+                    <Box
+                      component="img"
+                      src={product.immagine}
+                      alt={product.titolo}
+                      sx={{
+                        width: '100%',
+                        height: 'auto',
+                        maxHeight: 200,
+                        objectFit: 'cover',
+                        borderRadius: 1
+                      }}
+                    />
+                  </Grid>
+                )}
+                <Grid item xs={12} sm={product.immagine ? 9 : 12}>
+                  <Typography variant="h6" gutterBottom>
+                    {product.titolo}
+                  </Typography>
+                  <Typography variant="body2" paragraph>
+                    {product.descrizione}
+                  </Typography>
+                  <Box display="flex" justifyContent="space-between" alignItems="center">
+                    <Typography variant="body2" color="primary">
+                      Prezzo: {product.prezzo}€
+                    </Typography>
+                    <Typography variant="body2" color={product.disponibilita > 0 ? "success.main" : "error.main"}>
+                      Disponibilità: {product.disponibilita}
+                    </Typography>
+                  </Box>
+                </Grid>
+              </Grid>
+            </Box>
+          ))
+        )}
+      </Box>
+
+      <AddProductDialog />
     </Box>
   );
 }
