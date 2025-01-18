@@ -29,6 +29,9 @@ export default function Header() {
           <RouterLink to="/#how-it-works" className="NavLink">
             Come Funziona
           </RouterLink>
+          <NavLink href="/shop">
+            Shop
+          </NavLink>
           <NavLink href="/creator-info">
             Sono un Creator
           </NavLink>
