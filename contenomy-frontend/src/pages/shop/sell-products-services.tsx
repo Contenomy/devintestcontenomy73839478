@@ -8,8 +8,10 @@ import {
   DialogContent,
   DialogActions,
   TextField,
-  Grid
+  Grid,
+  IconButton
 } from "@mui/material";
+import { Edit as EditIcon, Close as DeleteIcon } from '@mui/icons-material';
 import { useForm, SubmitHandler } from "react-hook-form";
 
 interface ProductFormData {
@@ -27,31 +29,80 @@ interface Product extends Omit<ProductFormData, 'immagine'> {
 
 export default function SellProductsServices() {
   const [openDialog, setOpenDialog] = useState(false);
+  const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [products, setProducts] = useState<Product[]>([]);
 
   const handleOpenDialog = () => setOpenDialog(true);
-  const handleCloseDialog = () => setOpenDialog(false);
+  const handleCloseDialog = () => {
+    setOpenDialog(false);
+    setSelectedProduct(null);
+  };
 
   const handleAddProduct = (data: ProductFormData) => {
-    const newProduct: Product = {
-      ...data,
-      id: Date.now().toString(),
-      immagine: data.immagine && data.immagine.length > 0 ? URL.createObjectURL(data.immagine[0]) : undefined
-    };
-    setProducts(prev => [...prev, newProduct]);
+    if (selectedProduct) {
+      // Edit mode - update existing product
+      setProducts(prev => prev.map(product => 
+        product.id === selectedProduct.id 
+          ? {
+              ...product,
+              ...data,
+              immagine: data.immagine && data.immagine.length > 0 
+                ? URL.createObjectURL(data.immagine[0]) 
+                : product.immagine
+            }
+          : product
+      ));
+    } else {
+      // Create mode - add new product
+      const newProduct: Product = {
+        ...data,
+        id: Date.now().toString(),
+        immagine: data.immagine && data.immagine.length > 0 ? URL.createObjectURL(data.immagine[0]) : undefined
+      };
+      setProducts(prev => [...prev, newProduct]);
+    }
     handleCloseDialog();
   };
 
+  const handleDeleteProduct = () => {
+    if (selectedProduct) {
+      setProducts(prev => prev.filter(product => product.id !== selectedProduct.id));
+      setOpenDeleteDialog(false);
+      setSelectedProduct(null);
+    }
+  };
+
+  const productToFormData = (product: Product): ProductFormData => ({
+    titolo: product.titolo,
+    descrizione: product.descrizione,
+    prezzo: product.prezzo,
+    disponibilita: product.disponibilita
+  });
+
   function AddProductDialog() {
-    const { register, handleSubmit, formState: { errors } } = useForm<ProductFormData>();
+    const { register, handleSubmit, formState: { errors }, reset } = useForm<ProductFormData>({
+      defaultValues: selectedProduct ? productToFormData(selectedProduct) : {
+        titolo: '',
+        descrizione: '',
+        prezzo: 0,
+        disponibilita: 1
+      }
+    });
     
+    React.useEffect(() => {
+      if (selectedProduct) {
+        reset(productToFormData(selectedProduct));
+      }
+    }, [selectedProduct, reset]);
+
     const onSubmit: SubmitHandler<ProductFormData> = (data) => {
       handleAddProduct(data);
     };
 
     return (
       <Dialog open={openDialog} onClose={handleCloseDialog} maxWidth="sm" fullWidth>
-        <DialogTitle>Nuovo prodotto</DialogTitle>
+        <DialogTitle>{selectedProduct ? 'Modifica prodotto' : 'Nuovo prodotto'}</DialogTitle>
         <form onSubmit={handleSubmit(onSubmit)}>
           <DialogContent>
             <Grid container spacing={2}>
@@ -194,12 +245,34 @@ export default function SellProductsServices() {
                     {product.descrizione}
                   </Typography>
                   <Box display="flex" justifyContent="space-between" alignItems="center">
-                    <Typography variant="body2" color="primary">
-                      Prezzo: {product.prezzo}€
-                    </Typography>
-                    <Typography variant="body2" color={product.disponibilita > 0 ? "success.main" : "error.main"}>
-                      Disponibilità: {product.disponibilita}
-                    </Typography>
+                    <Box>
+                      <Typography variant="body2" color="primary">
+                        Prezzo: {product.prezzo}€
+                      </Typography>
+                      <Typography variant="body2" color={product.disponibilita > 0 ? "success.main" : "error.main"}>
+                        Disponibilità: {product.disponibilita}
+                      </Typography>
+                    </Box>
+                    <Box>
+                      <IconButton 
+                        size="small" 
+                        onClick={() => {
+                          setSelectedProduct(product);
+                          setOpenDialog(true);
+                        }}
+                      >
+                        <EditIcon sx={{ color: 'grey.500' }} />
+                      </IconButton>
+                      <IconButton 
+                        size="small"
+                        onClick={() => {
+                          setSelectedProduct(product);
+                          setOpenDeleteDialog(true);
+                        }}
+                      >
+                        <DeleteIcon sx={{ color: 'error.main' }} />
+                      </IconButton>
+                    </Box>
                   </Box>
                 </Grid>
               </Grid>
@@ -209,6 +282,20 @@ export default function SellProductsServices() {
       </Box>
 
       <AddProductDialog />
+
+      {/* Dialog di conferma eliminazione */}
+      <Dialog open={openDeleteDialog} onClose={() => setOpenDeleteDialog(false)}>
+        <DialogTitle>Eliminare il prodotto?</DialogTitle>
+        <DialogActions>
+          <Button onClick={() => setOpenDeleteDialog(false)}>Annulla</Button>
+          <Button 
+            onClick={handleDeleteProduct}
+            color="error"
+          >
+            Elimina
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Box>
   );
 }
