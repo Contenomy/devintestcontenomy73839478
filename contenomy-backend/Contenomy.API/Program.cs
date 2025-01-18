@@ -62,19 +62,18 @@ namespace Contenomy.API
                 return new InfluxService(config["Token"], "http://"+config["Address"] + ":" + config["Port"], config["Bucket"], config["Organization"]);
             });
 
-            // Aggiornamento della configurazione CORS
-            builder.AddContenomyCors();
-			//builder.Services.AddCors(options =>
-			//{
-			//    options.AddPolicy("AllowReactApp", builder =>
-			//    {
-			//        builder.WithOrigins("http://localhost:3000")
-			//               .AllowAnyMethod()
-			//               .AllowAnyHeader()
-			//               .AllowCredentials();
-			//    });
-			//});
-			
+            // CORS configuration
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowReactApp", builder =>
+                {
+                    builder.WithOrigins("http://localhost:3000")
+                           .AllowAnyMethod()
+                           .AllowAnyHeader()
+                           .AllowCredentials()
+                           .SetIsOriginAllowed(_ => true);
+                });
+            });
 
 			// Optionally, add a service to handle Mangopay API calls
 			
@@ -113,6 +112,16 @@ namespace Contenomy.API
             //app.UseCors("AllowReactApp");
 
             app.UseContenomyAuthentication();
+            app.UseAuthorization();
+
+            app.UseCors(builder =>
+            {
+                builder.WithOrigins("http://localhost:3000")
+                       .AllowAnyMethod()
+                       .AllowAnyHeader()
+                       .AllowCredentials()
+                       .SetIsOriginAllowed(_ => true);
+            });
 
             app.MapControllers();
 
