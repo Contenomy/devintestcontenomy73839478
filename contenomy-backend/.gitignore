@@ -373,3 +373,6 @@ Contenomy.API/C:\Logs\Contenomy\
 
 # Browser
 cookies.txt
+
+# Development settings
+appsettings.Development.json
