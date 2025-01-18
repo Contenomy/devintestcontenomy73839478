@@ -9,10 +9,21 @@ import {
   DialogActions,
   TextField,
   Grid,
-  IconButton
+  IconButton,
+  Select,
+  MenuItem,
+  FormControl,
+  InputLabel,
+  FormHelperText
 } from "@mui/material";
 import { Edit as EditIcon, Close as DeleteIcon } from '@mui/icons-material';
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useForm, SubmitHandler, Controller } from "react-hook-form";
+
+enum ProductCategory {
+  Prodotto = "Prodotto",
+  Consulenza = "Consulenza",
+  IncontroInformale = "Incontro informale"
+}
 
 interface ProductFormData {
   titolo: string;
@@ -20,6 +31,7 @@ interface ProductFormData {
   immagine?: FileList;
   prezzo: number;
   disponibilita: number;
+  categoria: ProductCategory;
 }
 
 interface Product extends Omit<ProductFormData, 'immagine'> {
@@ -32,6 +44,7 @@ export default function SellProductsServices() {
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [products, setProducts] = useState<Product[]>([]);
+  const [selectedCategory, setSelectedCategory] = useState<ProductCategory | ''>('');
 
   const handleOpenDialog = () => setOpenDialog(true);
   const handleCloseDialog = () => {
@@ -77,16 +90,18 @@ export default function SellProductsServices() {
     titolo: product.titolo,
     descrizione: product.descrizione,
     prezzo: product.prezzo,
-    disponibilita: product.disponibilita
+    disponibilita: product.disponibilita,
+    categoria: product.categoria
   });
 
   function AddProductDialog() {
-    const { register, handleSubmit, formState: { errors }, reset } = useForm<ProductFormData>({
+    const { register, handleSubmit, formState: { errors }, reset, control } = useForm<ProductFormData>({
       defaultValues: selectedProduct ? productToFormData(selectedProduct) : {
         titolo: '',
         descrizione: '',
         prezzo: 0,
-        disponibilita: 1
+        disponibilita: 1,
+        categoria: ProductCategory.Prodotto
       }
     });
     
@@ -138,19 +153,51 @@ export default function SellProductsServices() {
                 />
               </Grid>
               
+              <Grid item xs={12}>
+                <FormControl fullWidth>
+                  <InputLabel>Categoria</InputLabel>
+                  <Controller
+                    name="categoria"
+                    control={control}
+                    rules={{ required: true }}
+                    render={({ field }) => (
+                      <Select
+                        {...field}
+                        error={!!errors.categoria}
+                        label="Categoria"
+                      >
+                        {Object.values(ProductCategory).map((category) => (
+                          <MenuItem key={category} value={category}>
+                            {category}
+                          </MenuItem>
+                        ))}
+                      </Select>
+                    )}
+                  />
+                  {errors.categoria && (
+                    <FormHelperText error>Campo richiesto</FormHelperText>
+                  )}
+                </FormControl>
+              </Grid>
+
               <Grid item xs={6}>
-                <TextField
-                  fullWidth
-                  type="number"
-                  label="Prezzo in euro"
-                  error={!!errors.prezzo}
-                  helperText={errors.prezzo ? "Campo richiesto" : ""}
-                  {...register("prezzo", { 
-                    required: true,
-                    valueAsNumber: true,
-                    min: 0
-                  })}
-                />
+                <Box>
+                  <TextField
+                    fullWidth
+                    type="number"
+                    label="Prezzo in euro"
+                    error={!!errors.prezzo}
+                    helperText={errors.prezzo ? "Campo richiesto" : ""}
+                    {...register("prezzo", { 
+                      required: true,
+                      valueAsNumber: true,
+                      min: 0
+                    })}
+                  />
+                  <Typography variant="caption" color="textSecondary" sx={{ mt: 1 }}>
+                    Il prezzo sarà mostrato in supportshare
+                  </Typography>
+                </Box>
               </Grid>
               
               <Grid item xs={6}>
@@ -200,14 +247,37 @@ export default function SellProductsServices() {
         e quindi a farle crescere di valore
       </Typography>
 
+      {/* Filtro Categoria */}
+      <Box sx={{ mt: 3, mb: 2 }}>
+        <FormControl sx={{ minWidth: 200 }}>
+          <InputLabel>Filtra per categoria</InputLabel>
+          <Select
+            value={selectedCategory}
+            onChange={(e) => setSelectedCategory(e.target.value as ProductCategory | '')}
+            label="Filtra per categoria"
+          >
+            <MenuItem value="">Tutte le categorie</MenuItem>
+            {Object.values(ProductCategory).map((category) => (
+              <MenuItem key={category} value={category}>
+                {category}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+      </Box>
+
       {/* Lista dei prodotti */}
       <Box sx={{ mt: 4 }}>
-        {products.length === 0 ? (
+        {products
+          .filter(product => !selectedCategory || product.categoria === selectedCategory)
+          .length === 0 ? (
           <Typography variant="body1" color="textSecondary" align="center">
             Nessun prodotto disponibile. Usa il pulsante "Inserisci" per aggiungere prodotti.
           </Typography>
         ) : (
-          products.map((product) => (
+          products
+            .filter(product => !selectedCategory || product.categoria === selectedCategory)
+            .map((product) => (
             <Box
               key={product.id}
               sx={{
