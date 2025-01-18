@@ -21,13 +21,6 @@ export default function CreatorDashboard() {
       </Box>
       
       <Box className="dashboard-section">
-        <Typography variant="h6">Gestione Prodotti e Servizi</Typography>
-        <Button variant="contained" color="primary" href="/shop/sell-products-services">
-          Vendi prodotti/servizi
-        </Button>
-      </Box>
-      
-      <Box className="dashboard-section">
         <Typography variant="h6">Gestione premi</Typography>
         {/* Aggiungere qui la gestione dei premi */}
       </Box>
