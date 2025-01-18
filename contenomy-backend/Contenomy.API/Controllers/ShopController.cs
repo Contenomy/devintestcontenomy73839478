@@ -42,12 +42,32 @@ namespace Contenomy.API.Controllers
         {
             try
             {
+                var existingProduct = await _shopService.GetProductByIdAsync(id);
+                if (existingProduct == null)
+                {
+                    return NotFound();
+                }
+
+                // Only validate non-null values
+                if (dto.Name != null && (dto.Name.Length < 3 || dto.Name.Length > 100))
+                {
+                    return BadRequest("Name must be between 3 and 100 characters");
+                }
+                if (dto.Description != null && dto.Description.Length > 1000)
+                {
+                    return BadRequest("Description must not exceed 1000 characters");
+                }
+                if (dto.Price.HasValue && dto.Price.Value <= 0)
+                {
+                    return BadRequest("Price must be greater than 0");
+                }
+                if (dto.ImageUrl != null && (dto.ImageUrl.Length > 500 || !Uri.TryCreate(dto.ImageUrl, UriKind.Absolute, out _)))
+                {
+                    return BadRequest("Invalid image URL");
+                }
+
                 var product = await _shopService.UpdateProductAsync(id, dto);
                 return Ok(product);
-            }
-            catch (ArgumentException ex)
-            {
-                return NotFound(ex.Message);
             }
             catch (Exception ex)
             {

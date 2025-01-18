@@ -66,6 +66,8 @@ namespace Contenomy.API.Services
                 throw new ArgumentException("Product not found", nameof(id));
             }
 
+            // Only update fields that are provided in the DTO
+            // Update only provided properties
             if (dto.Name != null) product.Name = dto.Name;
             if (dto.Description != null) product.Description = dto.Description;
             if (dto.Price.HasValue) product.Price = dto.Price.Value;
