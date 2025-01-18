@@ -125,6 +125,25 @@ export default function CreatorDashboard() {
           </Typography>
         </Grid>
       </Grid>
+
+      {/* Sezione Vendi Prodotti e Servizi */}
+      <Grid container spacing={3} sx={{ mt: 3 }}>
+        <Grid item xs={12}>
+          <Button 
+            variant="contained" 
+            color="primary" 
+            href="/shop/sell-products-services"
+            fullWidth 
+            size="large"
+            sx={{ py: 2 }}
+          >
+            Vendi prodotti/servizi
+          </Button>
+          <Typography variant="body2" sx={{ mt: 1 }}>
+            Gestisci i tuoi prodotti e servizi in vendita!
+          </Typography>
+        </Grid>
+      </Grid>
     </Box>
   );
 }
