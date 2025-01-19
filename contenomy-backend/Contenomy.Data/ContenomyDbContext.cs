@@ -91,8 +91,33 @@ namespace Contenomy.Data
 			builder.Entity<Ratings>(entity =>
 			{
 				entity.HasOne(r => r.User);
-
 			});
+
+            builder.Entity<ShopProduct>(entity =>
+            {
+                entity.HasOne(p => p.Creator)
+                    .WithMany()
+                    .HasForeignKey(p => p.CreatorId)
+                    .OnDelete(DeleteBehavior.Restrict);
+            });
+
+            builder.Entity<ShopOrder>(entity =>
+            {
+                entity.HasOne(o => o.Creator)
+                    .WithMany()
+                    .HasForeignKey(o => o.CreatorId)
+                    .OnDelete(DeleteBehavior.Restrict);
+
+                entity.HasOne(o => o.Buyer)
+                    .WithMany()
+                    .HasForeignKey(o => o.BuyerId)
+                    .OnDelete(DeleteBehavior.Restrict);
+
+                entity.HasOne(o => o.Product)
+                    .WithMany()
+                    .HasForeignKey(o => o.ProductId)
+                    .OnDelete(DeleteBehavior.Restrict);
+            });
 			
 		}
 
@@ -110,6 +135,8 @@ namespace Contenomy.Data
 
 		public DbSet<PersonalData> personaldata { get; set; }
 		public DbSet<EmailVerificationRequest> EmailVerificationRequests { get; set; }
+        public DbSet<ShopProduct> ShopProducts { get; set; }
+        public DbSet<ShopOrder> ShopOrders { get; set; }
 
 		// Metodi per la gestione degli errori di transazione
 		private TransactionError GenerateTransactionError(int? purchaseId, int? sellId, string error, Exception? ex)

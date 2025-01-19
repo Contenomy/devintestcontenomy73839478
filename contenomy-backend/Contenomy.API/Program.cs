@@ -15,10 +15,10 @@ namespace Contenomy.API
     /*
      * SUMMARY: in linea di massima buon lavoro.
      * Devi ricordarti alcune cose (ModelState.IsValid devi controllarlo DOPO aver chiamato TryValidateModel).
-     * Lavora però sulle ripetizioni di codice: meno ripetizioni ci sono, più il codice è mantenibile (non penso
-     * tu abbia voglia quando lavori sul backend di andare a cercare gli stessi pezzi di codice perché hai fatto
+     * Lavora perï¿½ sulle ripetizioni di codice: meno ripetizioni ci sono, piï¿½ il codice ï¿½ mantenibile (non penso
+     * tu abbia voglia quando lavori sul backend di andare a cercare gli stessi pezzi di codice perchï¿½ hai fatto
      * una modifica in uno)
-     * Ho sparso dei commenti qua e là:
+     * Ho sparso dei commenti qua e lï¿½:
      * - TIP: sono consigli
      * - Q&A: sono mie domande per te
      * - FACT: sono osservazioni obiettive sul codice
@@ -38,9 +38,14 @@ namespace Contenomy.API
 
             // Configurazione dei servizi
             builder.Services.AddControllers()
+                .AddNewtonsoftJson()
                 .AddJsonOptions(options =>
                 {
                     options.JsonSerializerOptions.PropertyNamingPolicy = System.Text.Json.JsonNamingPolicy.CamelCase;
+                })
+                .ConfigureApiBehaviorOptions(options =>
+                {
+                    options.SuppressModelStateInvalidFilter = true;
                 });
 
             builder.Services.AddDbContext<ContenomyDbContext>(options =>
@@ -57,25 +62,25 @@ namespace Contenomy.API
                 return new InfluxService(config["Token"], "http://"+config["Address"] + ":" + config["Port"], config["Bucket"], config["Organization"]);
             });
 
-            // Aggiornamento della configurazione CORS
-            builder.AddContenomyCors();
-			//builder.Services.AddCors(options =>
-			//{
-			//    options.AddPolicy("AllowReactApp", builder =>
-			//    {
-			//        builder.WithOrigins("http://localhost:3000")
-			//               .AllowAnyMethod()
-			//               .AllowAnyHeader()
-			//               .AllowCredentials();
-			//    });
-			//});
-			
+            // CORS configuration
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowReactApp", builder =>
+                {
+                    builder.WithOrigins("http://localhost:3000")
+                           .AllowAnyMethod()
+                           .AllowAnyHeader()
+                           .AllowCredentials()
+                           .SetIsOriginAllowed(_ => true);
+                });
+            });
 
 			// Optionally, add a service to handle Mangopay API calls
 			
 			builder.Services.AddScoped<OrderBookService>();
             builder.Services.AddScoped<OrderMatchingService>();
             builder.Services.AddScoped<WalletService>();
+            builder.Services.AddScoped<ShopService>();
             builder.Services.AddHostedService<OrderMatchingBackgroundService>();
 			builder.Services.AddScoped<MangoPayService>();
 			builder.Services.AddHttpClient();
@@ -107,6 +112,16 @@ namespace Contenomy.API
             //app.UseCors("AllowReactApp");
 
             app.UseContenomyAuthentication();
+            app.UseAuthorization();
+
+            app.UseCors(builder =>
+            {
+                builder.WithOrigins("http://localhost:3000")
+                       .AllowAnyMethod()
+                       .AllowAnyHeader()
+                       .AllowCredentials()
+                       .SetIsOriginAllowed(_ => true);
+            });
 
             app.MapControllers();
 
