@@ -106,6 +106,27 @@ namespace Contenomy.API.Services
             return true;
         }
 
+        public async Task<List<ShopProductDTO>> GetAllActiveProductsAsync()
+        {
+            return await _context.ShopProducts
+                .Include(p => p.Creator)
+                .Where(p => p.IsActive)
+                .Select(p => new ShopProductDTO
+                {
+                    Id = p.Id,
+                    Name = p.Name,
+                    Description = p.Description,
+                    Price = p.Price,
+                    CreatorId = p.CreatorId,
+                    CreatorName = p.Creator.UserName,
+                    IsActive = p.IsActive,
+                    ImageUrl = p.ImageUrl,
+                    CreatedAt = p.CreatedAt,
+                    UpdatedAt = p.UpdatedAt
+                })
+                .ToListAsync();
+        }
+
         public async Task<List<ShopProductDTO>> GetProductsByCreatorAsync(string creatorId)
         {
             return await _context.ShopProducts
