@@ -52,9 +52,12 @@ export default function SellProductsServices() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
+  const API_BASE_URL = environment.serverUrl;
+
   useEffect(() => {
     const fetchProducts = async () => {
-      if (!profile) {
+      if (!profile || !profile.id) {
+        setError('Utente non autenticato. Effettua il login per visualizzare i tuoi prodotti.');
         setLoading(false);
         return;
       }
@@ -63,7 +66,16 @@ export default function SellProductsServices() {
         const response = await fetch(`${API_BASE_URL}/api/shop/products/creator/${profile.id}`, {
           credentials: 'include'
         });
-        if (!response.ok) throw new Error('Cannot fetch creator products');
+
+        if (!response.ok) {
+          if (response.status === 404) {
+            setProducts([]);
+            setLoading(false);
+            return;
+          }
+          throw new Error(`Errore ${response.status}: ${response.statusText}`);
+        }
+
         const data = await response.json();
         setProducts(data.map((p: any) => ({
           id: p.id.toString(),
@@ -83,15 +95,13 @@ export default function SellProductsServices() {
     };
 
     fetchProducts();
-  }, []);
+  }, [profile, API_BASE_URL]);
 
   const handleOpenDialog = () => setOpenDialog(true);
   const handleCloseDialog = () => {
     setOpenDialog(false);
     setSelectedProduct(null);
   };
-
-  const API_BASE_URL = environment.serverUrl;
   
   const handleAddProduct = async (data: ProductFormData) => {
     if (!profile) {
@@ -342,7 +352,6 @@ export default function SellProductsServices() {
         e quindi a farle crescere di valore
       </Typography>
 
-      {/* Filtro Categoria */}
       <Box sx={{ mt: 3, mb: 2 }}>
         <FormControl sx={{ minWidth: 200 }}>
           <InputLabel>Filtra per categoria</InputLabel>
@@ -361,7 +370,6 @@ export default function SellProductsServices() {
         </FormControl>
       </Box>
 
-      {/* Lista dei prodotti */}
       {error && (
         <Alert severity="error" sx={{ mb: 2 }} onClose={() => setError(null)}>
           {error}
