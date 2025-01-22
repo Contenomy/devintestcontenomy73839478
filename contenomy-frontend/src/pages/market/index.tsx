@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Box, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
+import { environment } from '@environment/environment.development';
 import MarketHighlights from './components/MarketHighlights';
 import MarketTable from './components/MarketTable';
 import FilterMenu from './components/FilterMenu';
@@ -19,7 +20,7 @@ export default function Market() {
 
   const fetchCreators = useCallback(async () => {
     try {
-      const response = await fetch('https://localhost:7126/api/ContentCreator');
+      const response = await fetch(`${environment.serverUrl}/api/ContentCreator`);
       const data = await response.json();
       setCreators(data);
       setFilteredCreators(data);

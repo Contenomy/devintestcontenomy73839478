@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Box, Typography, Button, CircularProgress } from '@mui/material';
 import { useTranslation } from 'react-i18next';
+import { environment } from '@environment/environment.development';
 import PriceChart from '../chart/PriceChart';
 import PlaceOrderCard from './PlaceOrderCard';
 import OrderBookTables from './OrderBookTables';
@@ -21,7 +22,7 @@ export default function OrderBook() {
     if (creatorId) {
       try {
         setLoading(true);
-        const response = await fetch(`https://localhost:7126/api/ContentCreator/${creatorId}`);
+        const response = await fetch(`${environment.serverUrl}/api/ContentCreator/${creatorId}`);
         if (!response.ok) {
           throw new Error('Failed to fetch creator asset');
         }
