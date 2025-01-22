@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { environment } from '../../environment/environment.development';
 import {
   Box,
   Typography,
@@ -33,7 +34,9 @@ export default function Shop() {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await fetch('http://localhost:5119/api/shop/products/creator/16cdbb18-ce79-4583-8bdf-554f176170ee');
+        const response = await fetch(`${environment.serverUrl}/api/shop/products`, {
+          credentials: 'include'
+        });
         if (!response.ok) {
           throw new Error('Failed to fetch products');
         }

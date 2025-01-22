@@ -100,14 +100,13 @@ export default function SellProductsServices() {
     }
 
     try {
-      const formData = new FormData();
-      formData.append('name', data.titolo);
-      formData.append('description', data.descrizione);
-      formData.append('price', data.prezzo.toString());
-      formData.append('creatorId', profile.id);
-      if (data.immagine && data.immagine.length > 0) {
-        formData.append('image', data.immagine[0]);
-      }
+      const productData = {
+        name: data.titolo,
+        description: data.descrizione,
+        price: data.prezzo,
+        creatorId: profile.id,
+        imageUrl: data.immagine && data.immagine.length > 0 ? URL.createObjectURL(data.immagine[0]) : ''
+      };
 
       const url = selectedProduct 
         ? `${API_BASE_URL}/api/shop/products/${selectedProduct.id}`
@@ -115,7 +114,10 @@ export default function SellProductsServices() {
 
       const response = await fetch(url, {
         method: selectedProduct ? 'PUT' : 'POST',
-        body: formData,
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(productData),
         credentials: 'include'
       });
 
