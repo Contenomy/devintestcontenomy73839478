@@ -2,6 +2,7 @@ using Contenomy.API.Services;
 using Contenomy.Shared.DTO;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace Contenomy.API.Controllers
 {
@@ -9,6 +10,23 @@ namespace Contenomy.API.Controllers
     [Route("api/[controller]")]
     public class ShopController : ControllerBase
     {
+        /// <summary>
+        /// Gets all active products visible to the public
+        /// </summary>
+        [HttpGet("products")]
+        public async Task<ActionResult<List<ShopProductDTO>>> GetAllProducts()
+        {
+            try
+            {
+                var products = await _shopService.GetAllActiveProductsAsync();
+                return Ok(products);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error getting all products");
+                return StatusCode(500, "An error occurred while retrieving the products");
+            }
+        }
         private readonly ShopService _shopService;
         private readonly ILogger<ShopController> _logger;
 
@@ -18,11 +36,19 @@ namespace Contenomy.API.Controllers
             _logger = logger;
         }
 
+        [Authorize]
         [HttpPost("products")]
         public async Task<ActionResult<ShopProductDTO>> CreateProduct([FromBody] CreateShopProductDTO dto)
         {
             try
             {
+                // Override creatorId with current user's ID
+                dto.CreatorId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+                if (string.IsNullOrEmpty(dto.CreatorId))
+                {
+                    return Unauthorized();
+                }
+
                 var product = await _shopService.CreateProductAsync(dto);
                 return CreatedAtAction(nameof(GetProduct), new { id = product.Id }, product);
             }
@@ -37,12 +63,23 @@ namespace Contenomy.API.Controllers
             }
         }
 
+        [Authorize]
         [HttpPut("products/{id}")]
         public async Task<ActionResult<ShopProductDTO>> UpdateProduct(int id, [FromBody] UpdateShopProductDTO dto)
         {
             try
             {
                 var existingProduct = await _shopService.GetProductByIdAsync(id);
+                if (existingProduct == null)
+                {
+                    return NotFound();
+                }
+
+                // Verify user owns this product
+                if (existingProduct.CreatorId != User.FindFirst(ClaimTypes.NameIdentifier)?.Value)
+                {
+                    return Forbid();
+                }
                 if (existingProduct == null)
                 {
                     return NotFound();
@@ -76,9 +113,22 @@ namespace Contenomy.API.Controllers
             }
         }
 
+        [Authorize]
         [HttpDelete("products/{id}")]
         public async Task<ActionResult> DeleteProduct(int id)
         {
+            var product = await _shopService.GetProductByIdAsync(id);
+            if (product == null)
+            {
+                return NotFound();
+            }
+
+            // Verify user owns this product
+            if (product.CreatorId != User.FindFirst(ClaimTypes.NameIdentifier)?.Value)
+            {
+                return Forbid();
+            }
+
             var result = await _shopService.DeleteProductAsync(id);
             if (!result)
             {
@@ -87,9 +137,16 @@ namespace Contenomy.API.Controllers
             return NoContent();
         }
 
+        [Authorize]
         [HttpGet("products/creator/{creatorId}")]
         public async Task<ActionResult<List<ShopProductDTO>>> GetProductsByCreator(string creatorId)
         {
+            // Verify user has permission to view these products
+            if (creatorId != User.FindFirst(ClaimTypes.NameIdentifier)?.Value)
+            {
+                return Forbid();
+            }
+            
             try
             {
                 var products = await _shopService.GetProductsByCreatorAsync(creatorId);
@@ -100,7 +157,7 @@ namespace Contenomy.API.Controllers
                 _logger.LogError(ex, "Error getting products for creator {CreatorId}", creatorId);
                 return StatusCode(500, "An error occurred while retrieving the products");
             }
-        }
+}
 
         [HttpGet("products/{id}")]
         public async Task<ActionResult<ShopProductDTO>> GetProduct(int id)

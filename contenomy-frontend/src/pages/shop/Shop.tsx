@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import { environment } from '../../environment/environment.development';
+import { CircularProgress, Alert } from '@mui/material';
 import {
   Box,
   Typography,
@@ -33,7 +35,9 @@ export default function Shop() {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await fetch('http://localhost:5119/api/shop/products/creator/16cdbb18-ce79-4583-8bdf-554f176170ee');
+        const response = await fetch(`${environment.serverUrl}/api/shop/products`, {
+          credentials: 'include'
+        });
         if (!response.ok) {
           throw new Error('Failed to fetch products');
         }
@@ -50,22 +54,6 @@ export default function Shop() {
     fetchProducts();
   }, []);
 
-  if (loading) {
-    return (
-      <Box sx={{ p: 3 }}>
-        <Typography>Loading products...</Typography>
-      </Box>
-    );
-  }
-
-  if (error) {
-    return (
-      <Box sx={{ p: 3 }}>
-        <Typography color="error">Error: {error}</Typography>
-      </Box>
-    );
-  }
-
   return (
     <Box sx={{ p: 3 }}>
       <Typography variant="h4" gutterBottom>
@@ -75,8 +63,20 @@ export default function Shop() {
         Esplora i prodotti e servizi disponibili
       </Typography>
 
-      <Grid container spacing={3} sx={{ mt: 2 }}>
-        {products.map((product) => (
+      {error && (
+        <Alert severity="error" sx={{ mb: 2 }} onClose={() => setError(null)}>
+          {error}
+        </Alert>
+      )}
+
+      {loading ? (
+        <Box display="flex" justifyContent="center" alignItems="center" minHeight={200}>
+          <CircularProgress />
+        </Box>
+      ) : (
+
+        <Grid container spacing={3} sx={{ mt: 2 }}>
+          {products.map((product) => (
           <Grid item xs={12} sm={6} md={4} key={product.id}>
             <Card>
               {product.imageUrl && (
@@ -103,8 +103,9 @@ export default function Shop() {
               </CardContent>
             </Card>
           </Grid>
-        ))}
-      </Grid>
+          ))}
+        </Grid>
+      )}
     </Box>
   );
 }
