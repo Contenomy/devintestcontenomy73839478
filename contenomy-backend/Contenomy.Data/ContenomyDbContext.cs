@@ -19,7 +19,7 @@ namespace Contenomy.Data
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseNpgsql("Host=localhost;Database=contenomy;Username=postgres;Password=iot");
+                throw new InvalidOperationException("Database connection string must be configured through dependency injection.");
             }
             optionsBuilder.EnableSensitiveDataLogging();
             base.OnConfiguring(optionsBuilder);
