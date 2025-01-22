@@ -146,7 +146,7 @@ namespace Contenomy.API.Controllers
             {
                 return Forbid();
             }
-        {
+            
             try
             {
                 var products = await _shopService.GetProductsByCreatorAsync(creatorId);
@@ -157,7 +157,7 @@ namespace Contenomy.API.Controllers
                 _logger.LogError(ex, "Error getting products for creator {CreatorId}", creatorId);
                 return StatusCode(500, "An error occurred while retrieving the products");
             }
-        }
+}
 
         [HttpGet("products/{id}")]
         public async Task<ActionResult<ShopProductDTO>> GetProduct(int id)
