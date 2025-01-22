@@ -3,7 +3,7 @@ import { loginProviders } from "./external-providers/external-providers.environm
 
 export const environment = {
     loginProviders,
-    serverUrl: `https://localhost:7126`
+    serverUrl: `http://localhost:5119`
 }
 
 
