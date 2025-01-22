@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { ContentCreatorInfo } from '@model/ContentCreatorInfo';
+import { environment } from '@environment/environment.development';
 import './home.css';
 
 const CreatorCard = ({ creator }: { creator: ContentCreatorInfo }) => {
@@ -46,7 +47,7 @@ export default function Home() {
   useEffect(() => {
     const fetchCreators = async () => {
       try {
-        const response = await fetch('https://localhost:7126/api/ContentCreator', {
+        const response = await fetch(`${environment.serverUrl}/api/ContentCreator`, {
           method: 'GET',
           headers: {
             'Accept': 'application/json',
