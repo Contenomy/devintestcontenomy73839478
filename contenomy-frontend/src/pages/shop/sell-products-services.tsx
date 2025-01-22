@@ -1,4 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { environment } from '../../environment/environment.development';
+import { authContext } from "../../context/AuthContext";
+import { CircularProgress, Alert } from '@mui/material';
 import { 
   Box, 
   Typography, 
@@ -40,11 +43,47 @@ interface Product extends Omit<ProductFormData, 'immagine'> {
 }
 
 export default function SellProductsServices() {
+  const { profile } = useContext(authContext);
   const [openDialog, setOpenDialog] = useState(false);
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [products, setProducts] = useState<Product[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<ProductCategory | ''>('');
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      if (!profile) {
+        setLoading(false);
+        return;
+      }
+
+      try {
+        const response = await fetch(`${API_BASE_URL}/api/shop/products/creator/${profile.id}`, {
+          credentials: 'include'
+        });
+        if (!response.ok) throw new Error('Cannot fetch creator products');
+        const data = await response.json();
+        setProducts(data.map((p: any) => ({
+          id: p.id.toString(),
+          titolo: p.name,
+          descrizione: p.description,
+          prezzo: p.price,
+          disponibilita: 1,
+          categoria: ProductCategory.Prodotto,
+          immagine: p.imageUrl
+        })));
+      } catch (e) {
+        console.error(e);
+        setError(e instanceof Error ? e.message : 'Errore nel caricamento dei prodotti');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProducts();
+  }, []);
 
   const handleOpenDialog = () => setOpenDialog(true);
   const handleCloseDialog = () => {
@@ -52,45 +91,91 @@ export default function SellProductsServices() {
     setSelectedProduct(null);
   };
 
-  // TODO: Replace with actual API endpoint when backend is ready
-  const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || '';
+  const API_BASE_URL = environment.serverUrl;
   
   const handleAddProduct = async (data: ProductFormData) => {
+    if (!profile) {
+      setError('Devi essere loggato per creare prodotti');
+      return;
+    }
+
     try {
+      const formData = new FormData();
+      formData.append('name', data.titolo);
+      formData.append('description', data.descrizione);
+      formData.append('price', data.prezzo.toString());
+      formData.append('creatorId', profile.id);
+      if (data.immagine && data.immagine.length > 0) {
+        formData.append('image', data.immagine[0]);
+      }
+
+      const url = selectedProduct 
+        ? `${API_BASE_URL}/api/shop/products/${selectedProduct.id}`
+        : `${API_BASE_URL}/api/shop/products`;
+
+      const response = await fetch(url, {
+        method: selectedProduct ? 'PUT' : 'POST',
+        body: formData,
+        credentials: 'include'
+      });
+
+      if (!response.ok) {
+        throw new Error('Errore nella gestione del prodotto');
+      }
+
+      const savedProduct = await response.json();
+      
       if (selectedProduct) {
-        // Edit mode - update existing product
         setProducts(prev => prev.map(product => 
           product.id === selectedProduct.id 
             ? {
-                ...product,
-                ...data,
-                immagine: data.immagine && data.immagine.length > 0 
-                  ? URL.createObjectURL(data.immagine[0]) 
-                  : product.immagine
+                id: savedProduct.id.toString(),
+                titolo: savedProduct.name,
+                descrizione: savedProduct.description,
+                prezzo: savedProduct.price,
+                disponibilita: 1,
+                categoria: ProductCategory.Prodotto,
+                immagine: savedProduct.imageUrl
               }
             : product
         ));
       } else {
-        // Create mode - add new product
-        const newProduct: Product = {
-          ...data,
-          id: Date.now().toString(),
-          immagine: data.immagine && data.immagine.length > 0 ? URL.createObjectURL(data.immagine[0]) : undefined
-        };
-        setProducts(prev => [...prev, newProduct]);
+        setProducts(prev => [...prev, {
+          id: savedProduct.id.toString(),
+          titolo: savedProduct.name,
+          descrizione: savedProduct.description,
+          prezzo: savedProduct.price,
+          disponibilita: 1,
+          categoria: ProductCategory.Prodotto,
+          immagine: savedProduct.imageUrl
+        }]);
       }
       handleCloseDialog();
     } catch (error) {
       console.error('Error handling product:', error);
-      // TODO: Add proper error handling when backend is implemented
+      setError(error instanceof Error ? error.message : 'Errore nella gestione del prodotto');
     }
   };
 
-  const handleDeleteProduct = () => {
+  const handleDeleteProduct = async () => {
     if (selectedProduct) {
-      setProducts(prev => prev.filter(product => product.id !== selectedProduct.id));
-      setOpenDeleteDialog(false);
-      setSelectedProduct(null);
+      try {
+        const response = await fetch(`${API_BASE_URL}/api/shop/products/${selectedProduct.id}`, {
+          method: 'DELETE',
+          credentials: 'include'
+        });
+
+        if (!response.ok) {
+          throw new Error('Errore nella cancellazione del prodotto');
+        }
+
+        setProducts(prev => prev.filter(product => product.id !== selectedProduct.id));
+        setOpenDeleteDialog(false);
+        setSelectedProduct(null);
+      } catch (error) {
+        console.error('Error deleting product:', error);
+        setError(error instanceof Error ? error.message : 'Errore nella cancellazione del prodotto');
+      }
     }
   };
 
@@ -275,9 +360,18 @@ export default function SellProductsServices() {
       </Box>
 
       {/* Lista dei prodotti */}
+      {error && (
+        <Alert severity="error" sx={{ mb: 2 }} onClose={() => setError(null)}>
+          {error}
+        </Alert>
+      )}
+
       <Box sx={{ mt: 4 }}>
-        {products
-          .filter(product => !selectedCategory || product.categoria === selectedCategory)
+        {loading ? (
+          <Box display="flex" justifyContent="center" alignItems="center" minHeight={200}>
+            <CircularProgress />
+          </Box>
+        ) : products.filter(product => !selectedCategory || product.categoria === selectedCategory)
           .length === 0 ? (
           <Typography variant="body1" color="textSecondary" align="center">
             Nessun prodotto disponibile. Usa il pulsante "Inserisci" per aggiungere prodotti.
