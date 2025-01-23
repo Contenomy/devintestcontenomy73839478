@@ -214,7 +214,7 @@ export default function SellProductsServices() {
       if (selectedProduct) {
         reset(productToFormData(selectedProduct));
       }
-    }, [selectedProduct, reset]);
+    }, [reset]);
 
     const onSubmit: SubmitHandler<ProductFormData> = (data) => {
       handleAddProduct(data);
