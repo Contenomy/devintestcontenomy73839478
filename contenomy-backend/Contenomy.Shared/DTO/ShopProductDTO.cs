@@ -24,6 +24,9 @@ namespace Contenomy.Shared.DTO
         [RegularExpression(@"^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$", 
             ErrorMessage = "Please provide a valid URL")]
         public string? ImageUrl { get; set; }
+
+        [StringLength(150)]
+        public string? Category { get; set; }
     }
 
     public class UpdateShopProductDTO
@@ -33,6 +36,7 @@ namespace Contenomy.Shared.DTO
         public decimal? Price { get; set; }
         public string? ImageUrl { get; set; }
         public bool? IsActive { get; set; }
+        public string? Category { get; set; }
     }
 
     public class ShopProductDTO
@@ -45,6 +49,7 @@ namespace Contenomy.Shared.DTO
         public string CreatorName { get; set; }
         public bool IsActive { get; set; }
         public string ImageUrl { get; set; }
+        public string? Category { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime? UpdatedAt { get; set; }
     }
