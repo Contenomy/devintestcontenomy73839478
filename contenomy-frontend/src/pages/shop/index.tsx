@@ -44,25 +44,27 @@ export default function Shop() {
     setDialogOpen(false);
   };
 
-  // Test data for frontend-only verification
-  const testProducts: ShopProduct[] = [{
-    id: 1,
-    name: "Test Product",
-    description: "This is a test product description that shows all the details about the product.",
-    price: 100,
-    creatorId: "test-creator",
-    creatorName: "Test Creator",
-    isActive: true,
-    imageUrl: "https://picsum.photos/200",
-    createdAt: new Date().toISOString(),
-    updatedAt: null
-  }];
-
   useEffect(() => {
-    // Skip API call for frontend-only verification
-    setLoading(false);
-    setError(null);
-    setProducts(testProducts);
+    const fetchProducts = async () => {
+      try {
+        const response = await fetch(`${environment.serverUrl}/api/shop/products`, {
+          credentials: 'include'
+        });
+        if (!response.ok) {
+          throw new Error('Failed to fetch products');
+        }
+        const data = await response.json();
+        setProducts(data);
+        setError(null);
+      } catch (err) {
+        setError(err instanceof Error ? err.message : 'An error occurred');
+        console.error('Error fetching products:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProducts();
   }, []);
 
   return (
