@@ -77,15 +77,18 @@ export default function SellProductsServices() {
         }
 
         const data = await response.json();
-        setProducts(data.map((p: any) => ({
-          id: p.id.toString(),
-          titolo: p.name,
-          descrizione: p.description,
-          prezzo: p.price,
-          disponibilita: 1,
-          categoria: ProductCategory.Prodotto,
-          immagine: p.imageUrl
-        })));
+        setProducts(data.map((p: any) => {
+          console.log('Product data:', p); // Debug log
+          return {
+            id: p.id.toString(),
+            titolo: p.name,
+            descrizione: p.description,
+            prezzo: p.price,
+            disponibilita: 1,
+            categoria: p.category || ProductCategory.Prodotto,
+            immagine: p.imageUrl
+          };
+        }));
       } catch (e) {
         console.error(e);
         setError(e instanceof Error ? e.message : 'Errore nel caricamento dei prodotti');
@@ -115,8 +118,10 @@ export default function SellProductsServices() {
         description: data.descrizione,
         price: data.prezzo,
         creatorId: profile.id,
+        category: data.categoria,
         imageUrl: data.immagine && data.immagine.length > 0 ? URL.createObjectURL(data.immagine[0]) : ''
       };
+      console.log('Creating/updating product with category:', data.categoria);
 
       const url = selectedProduct 
         ? `${API_BASE_URL}/api/shop/products/${selectedProduct.id}`
@@ -146,7 +151,7 @@ export default function SellProductsServices() {
                 descrizione: savedProduct.description,
                 prezzo: savedProduct.price,
                 disponibilita: 1,
-                categoria: ProductCategory.Prodotto,
+                categoria: savedProduct.category || ProductCategory.Prodotto,
                 immagine: savedProduct.imageUrl
               }
             : product
@@ -158,7 +163,7 @@ export default function SellProductsServices() {
           descrizione: savedProduct.description,
           prezzo: savedProduct.price,
           disponibilita: 1,
-          categoria: ProductCategory.Prodotto,
+          categoria: savedProduct.category || ProductCategory.Prodotto,
           immagine: savedProduct.imageUrl
         }]);
       }
