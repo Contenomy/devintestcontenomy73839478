@@ -89,6 +89,7 @@ namespace Contenomy.API.Services
                 CreatorName = product.Creator.UserName,
                 IsActive = product.IsActive,
                 ImageUrl = product.ImageUrl,
+                Category = product.Category,
                 CreatedAt = product.CreatedAt,
                 UpdatedAt = product.UpdatedAt
             };
@@ -172,6 +173,7 @@ namespace Contenomy.API.Services
                 CreatorName = product.Creator.UserName,
                 IsActive = product.IsActive,
                 ImageUrl = product.ImageUrl,
+                Category = product.Category,
                 CreatedAt = product.CreatedAt,
                 UpdatedAt = product.UpdatedAt
             };

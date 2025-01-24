@@ -30,5 +30,8 @@ namespace Contenomy.Data.Entities
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
         public DateTime? UpdatedAt { get; set; }
+
+        [MaxLength(150)]
+        public string? Category { get; set; }
     }
 }
