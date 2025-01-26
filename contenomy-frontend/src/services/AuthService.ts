@@ -81,16 +81,25 @@ export default class AuthService {
             if (res.status >= 400) {
                 const msg = await res.text();
                 console.error(msg);
-                
-                this.setDeveloperProfile();
+                this._userProfile = {
+                    isAuthenticated: false,
+                    id: "",
+                    roles: [],
+                    claims: {}
+                };
+                return this._userProfile;
             }
 
             this._userProfile = await res.json() as IUserProfile;
         }
         catch (err) {
             console.log(err);
-            
-            this.setDeveloperProfile();
+            this._userProfile = {
+                isAuthenticated: false,
+                id: "",
+                roles: [],
+                claims: {}
+            };
         }
         return this._userProfile;
     }

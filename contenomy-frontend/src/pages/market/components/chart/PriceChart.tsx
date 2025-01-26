@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { Box, ToggleButtonGroup, ToggleButton, keyframes } from '@mui/material';
 import { LineChart } from '@mui/x-charts/LineChart';
 import useFetch from '@hooks/useFetch';
+import { environment } from '@environment/environment.development';
 
 const timeRanges = { '1G': 0, '7G': 1, '1M': 2, '1A': 3, 'YTD': 4, 'ALL': 5 };
 
@@ -29,7 +30,7 @@ const PriceChart: React.FC<PriceChartProps> = ({ creatorId, width = 800, height 
     }
   }, [setSelectedTimeRange, setTimeRangeValue]);
 
-  const [res, loading] = useFetch(`https://localhost:7126/api/PriceHistory/trend/${creatorId}?period=${timeRangeValue}`, emptyData);
+  const [res, loading] = useFetch(`${environment.serverUrl}/api/PriceHistory/trend/${creatorId}?period=${timeRangeValue}`, emptyData);
 
   // useEffect(() => {
   //   // const sampleData = {

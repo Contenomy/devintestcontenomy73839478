@@ -4,6 +4,7 @@ import "./index.css";
 import Header from "@components/Header";
 import Footer from "@components/Footer";
 import { AuthProvider, DEFAULT_PROFILE } from "@context/AuthContext";
+import { ProductProvider } from "@context/ProductContext";
 import IUserProfile from "@model/UserProfile";
 import AuthService from "./services/AuthService";
 import RatingWidget from "@components/RatingWidget";
@@ -35,6 +36,8 @@ import AdminDashboard from '@pages/admin-dashboard';
 import ManageRewards from '@pages/manage-rewards';
 
 import CreatorInfo from '@pages/creator-info';
+import Shop from '@pages/shop';
+import SellProductsServices from '@pages/shop/sell-products-services';
 
 export default function App() {
   const [profile, setProfile] = useState<IUserProfile>(DEFAULT_PROFILE.profile);
@@ -85,8 +88,9 @@ export default function App() {
     <BrowserRouter>
       <AuthProvider value={{ profile, setProfile }}>
         <Header />
-        <main id="main-content" className="m-2">
-          <Routes>
+        <ProductProvider>
+          <main id="main-content" className="m-2">
+            <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
@@ -102,6 +106,8 @@ export default function App() {
             <Route path="/admin-dashboard" element={<AdminDashboard />} />
             <Route path="/manage-rewards" element={<ManageRewards />} />
             <Route path="/creator-info" element={<CreatorInfo />} />
+            <Route path="/shop" element={<Shop />} />
+            <Route path="/shop/sell-products-services" element={<SellProductsServices />} />
             <Route path="/payment" element={<Payment />} />
             <Route path="/payment/PaymentConfirmation" element={<PaymentConfirmation />} />
             <Route path="/payment/TransferConfirmation" element={<TransferConfirmation />} />
@@ -113,7 +119,8 @@ export default function App() {
             <Route path="/wallet/PaymentConfirmation" element={<WalletPaymentConfirmation />} />
             <Route path="/wallet/CheckRegistration" element={<WalletCheckRegistration />} />
           </Routes>
-        </main>
+          </main>
+        </ProductProvider>
         <Footer />
         {showRating && (
           <RatingWidget

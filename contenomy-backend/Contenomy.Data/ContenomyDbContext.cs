@@ -19,7 +19,7 @@ namespace Contenomy.Data
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseNpgsql("Host=localhost;Database=contenomy;Username=postgres;Password=iot");
+                throw new InvalidOperationException("Database connection string must be configured through dependency injection.");
             }
             optionsBuilder.EnableSensitiveDataLogging();
             base.OnConfiguring(optionsBuilder);
@@ -88,13 +88,38 @@ namespace Contenomy.Data
                     .HasForeignKey(ph => ph.CreatorAssetId);
             });
 
-			builder.Entity<Ratings>(entity =>
-			{
-				entity.HasOne(r => r.User);
+            builder.Entity<Ratings>(entity =>
+            {
+                entity.HasOne(r => r.User);
+            });
 
-			});
-			
-		}
+            builder.Entity<ShopProduct>(entity =>
+            {
+                entity.HasOne(p => p.Creator)
+                    .WithMany()
+                    .HasForeignKey(p => p.CreatorId)
+                    .OnDelete(DeleteBehavior.Restrict);
+            });
+
+            builder.Entity<ShopOrder>(entity =>
+            {
+                entity.HasOne(o => o.Creator)
+                    .WithMany()
+                    .HasForeignKey(o => o.CreatorId)
+                    .OnDelete(DeleteBehavior.Restrict);
+
+                entity.HasOne(o => o.Buyer)
+                    .WithMany()
+                    .HasForeignKey(o => o.BuyerId)
+                    .OnDelete(DeleteBehavior.Restrict);
+
+                entity.HasOne(o => o.Product)
+                    .WithMany()
+                    .HasForeignKey(o => o.ProductId)
+                    .OnDelete(DeleteBehavior.Restrict);
+            });
+
+        }
 
         // Definizione dei DbSet per le entità del database
         public DbSet<DataProtectionKey> DataProtectionKeys { get; set; }
@@ -106,13 +131,15 @@ namespace Contenomy.Data
         public DbSet<Order> Orders { get; set; }
         public DbSet<PriceHistory> PriceHistories { get; set; }
         public DbSet<IPO> IPOs { get; set; }
-		public DbSet<Ratings> Ratings { get; set; }
+        public DbSet<Ratings> Ratings { get; set; }
 
-		public DbSet<PersonalData> personaldata { get; set; }
-		public DbSet<EmailVerificationRequest> EmailVerificationRequests { get; set; }
+        public DbSet<PersonalData> personaldata { get; set; }
+        public DbSet<EmailVerificationRequest> EmailVerificationRequests { get; set; }
+        public DbSet<ShopProduct> ShopProducts { get; set; }
+        public DbSet<ShopOrder> ShopOrders { get; set; }
 
-		// Metodi per la gestione degli errori di transazione
-		private TransactionError GenerateTransactionError(int? purchaseId, int? sellId, string error, Exception? ex)
+        // Metodi per la gestione degli errori di transazione
+        private TransactionError GenerateTransactionError(int? purchaseId, int? sellId, string error, Exception? ex)
         {
             return new TransactionError
             {

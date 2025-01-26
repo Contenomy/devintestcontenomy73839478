@@ -1,6 +1,7 @@
 // OrderBookTables.tsx
 import React, { useState, useEffect, useCallback } from 'react';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Box, Typography } from '@mui/material';
+import { environment } from '@environment/environment.development';
 
 interface Order {
   id: number;
@@ -22,7 +23,7 @@ const OrderBookTables: React.FC<OrderBookTablesProps> = ({ creatorAssetId, force
 
   const fetchOrderBook = useCallback(async () => {
     try {
-      const response = await fetch(`https://localhost:7126/api/OrderBook/${creatorAssetId}`);
+      const response = await fetch(`${environment.serverUrl}/api/OrderBook/${creatorAssetId}`);
       if (!response.ok) {
         throw new Error('Failed to fetch order book');
       }

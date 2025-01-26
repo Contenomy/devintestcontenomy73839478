@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { environment } from '@environment/environment.development';
 import { Box, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
+import { environment } from '@environment/environment.development';
 import MarketHighlights from './components/MarketHighlights';
 import MarketTable from './components/MarketTable';
 import FilterMenu from './components/FilterMenu';

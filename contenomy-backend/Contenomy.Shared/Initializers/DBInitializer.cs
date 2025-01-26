@@ -1,4 +1,4 @@
-﻿using Contenomy.Data;
+using Contenomy.Data;
 using Contenomy.Data.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
