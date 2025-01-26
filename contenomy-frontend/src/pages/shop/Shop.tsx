@@ -1,39 +1,32 @@
-import React, { useEffect, useState } from 'react';
-import { environment } from '../../environment/environment.development';
-import { CircularProgress, Alert } from '@mui/material';
-import {
-  Box,
-  Typography,
-  Grid,
-  Card,
-  CardContent,
-  CardMedia,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-  Button
-} from '@mui/material';
+import React, { useEffect, useState, useCallback } from 'react';
+import { CircularProgress, Alert, SelectChangeEvent } from '@mui/material';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import Grid from '@mui/material/Grid';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import CardMedia from '@mui/material/CardMedia';
+import Dialog from '@mui/material/Dialog';
+import DialogTitle from '@mui/material/DialogTitle';
+import DialogContent from '@mui/material/DialogContent';
+import DialogActions from '@mui/material/DialogActions';
+import Button from '@mui/material/Button';
+import FormControl from '@mui/material/FormControl';
+import InputLabel from '@mui/material/InputLabel';
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
+import { styled } from '@mui/material/styles';
+import { ShopService } from '../../services/ShopService';
+import { ShopProduct, ProductCategory } from '../../types/shop';
+import './Shop.css';
 
-interface ShopProduct {
-  id: number;
-  name: string;
-  description: string;
-  price: number;
-  creatorId: string;
-  creatorName: string;
-  isActive: boolean;
-  imageUrl: string;
-  createdAt: string;
-  updatedAt: string | null;
-}
-
-export default function Shop() {
+const Shop: React.FC = () => {
   const [products, setProducts] = useState<ShopProduct[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [selectedProduct, setSelectedProduct] = useState<ShopProduct | null>(null);
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState<ProductCategory | ''>('');
 
   const handleOpenDialog = (product: ShopProduct) => {
     setSelectedProduct(product);
@@ -45,41 +38,107 @@ export default function Shop() {
     setDialogOpen(false);
   };
 
-  // Test data for frontend-only verification
-  const testProducts: ShopProduct[] = [{
-    id: 1,
-    name: "Test Product",
-    description: "This is a test product description that shows all the details about the product.",
-    price: 100,
-    creatorId: "test-creator",
-    creatorName: "Test Creator",
-    isActive: true,
-    imageUrl: "https://picsum.photos/200",
-    createdAt: new Date().toISOString(),
-    updatedAt: null
-  }];
+  const handleCategoryChange = useCallback((e: SelectChangeEvent<string>) => {
+    console.log('Debug - Category changed to:', e.target.value);
+    setSelectedCategory(e.target.value as ProductCategory | '');
+  }, []);
 
   useEffect(() => {
-    // Skip API call for frontend-only verification
-    setLoading(false);
-    setError(null);
-    setProducts(testProducts);
+    const fetchProducts = async () => {
+      console.log('Fetching products...');
+      setLoading(true);
+      setError(null);
+      
+      setLoading(true);
+      setError(null);
+      setProducts([]); // Clear existing products
+
+      try {
+        console.log('Attempting to fetch from backend...');
+        const response = await fetch('http://localhost:5119/api/shop/products');
+        
+        if (!response.ok) {
+          throw new Error(`Backend error: ${response.status}`);
+        }
+        
+        const data = await response.json();
+        console.log('Backend data received:', data);
+        
+        if (!Array.isArray(data)) {
+          throw new Error('Invalid data format received from backend');
+        }
+        
+        setProducts(data);
+        setLoading(false);
+        setError(null);
+      } catch (error) {
+        console.error('Backend error:', error);
+        
+        setError('⚠️ Attenzione: Il server non risponde.\n\n' + 
+                'Non è possibile caricare i prodotti in questo momento.\n' + 
+                'Per favore, riprova più tardi.');
+        setProducts([]);
+        setLoading(false);
+      }
+    };
+
+    fetchProducts();
   }, []);
 
   return (
-    <Box sx={{ p: 3 }}>
-      <Typography variant="h4" gutterBottom>
-        Shop
-      </Typography>
-      <Typography variant="body1" gutterBottom>
-        Esplora i prodotti e servizi disponibili
-      </Typography>
+    <Box sx={{ p: 3, width: '100%' }} className="shop-container">
+      {console.log('Rendering Shop component, error state:', error)}
+      
+      <Box className="shop-header">
+        <Typography variant="h4" component="h1" gutterBottom>
+          Shop
+        </Typography>
+        <Typography variant="body1" gutterBottom>
+          Esplora i prodotti e servizi disponibili
+        </Typography>
+      </Box>
 
-      {error && (
-        <Alert severity="error" sx={{ mb: 2 }} onClose={() => setError(null)}>
-          {error}
-        </Alert>
+      {/* Loading and Error states */}
+      {loading && (
+        <Box sx={{ display: 'flex', justifyContent: 'center', my: 4 }}>
+          <CircularProgress />
+        </Box>
       )}
+      
+      {error && (
+        <Box sx={{ my: 2 }}>
+          <Alert 
+            severity="error" 
+            variant="filled"
+            sx={{ mb: 2 }}
+          >
+            <Typography variant="body1" sx={{ whiteSpace: 'pre-line' }}>
+              {error}
+            </Typography>
+          </Alert>
+        </Box>
+      )}
+
+      {/* Category filter */}
+      <Box className="shop-category-filter" sx={{ width: '100%', mb: 3 }}>
+        <FormControl variant="outlined" sx={{ minWidth: 200 }}>
+          <InputLabel>Filtra per categoria</InputLabel>
+          <Select
+            value={selectedCategory}
+            onChange={handleCategoryChange}
+            label="Filtra per categoria"
+          >
+            <MenuItem value="">
+              <em>Tutte le categorie</em>
+            </MenuItem>
+            {Object.values(ProductCategory).map((category) => (
+              <MenuItem key={category} value={category}>
+                {category}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+      </Box>
 
       {loading ? (
         <Box display="flex" justifyContent="center" alignItems="center" minHeight={200}>
@@ -87,43 +146,59 @@ export default function Shop() {
         </Box>
       ) : (
 
-        <Grid container spacing={3} sx={{ mt: 2 }}>
-          {products.map((product) => (
-          <Grid item xs={12} sm={6} md={4} key={product.id}>
-            <Card 
-              onClick={() => handleOpenDialog(product)}
-              sx={{ 
-                cursor: 'pointer',
-                '&:hover': {
-                  boxShadow: 6
-                }
-              }}
-            >
-              {product.imageUrl && (
-                <CardMedia
-                  component="img"
-                  height="200"
-                  image={product.imageUrl}
-                  alt={product.name}
-                />
-              )}
-              <CardContent>
-                <Typography variant="h6" gutterBottom>
-                  {product.name}
-                </Typography>
-                <Typography variant="body2" color="text.secondary" paragraph>
-                  {product.description}
-                </Typography>
-                <Typography variant="subtitle1" color="primary">
-                  {product.price} supportshare
-                </Typography>
-                <Typography variant="caption" display="block">
-                  By {product.creatorName}
-                </Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-          ))}
+        <Grid container spacing={3} className="shop-grid">
+          {console.log('Products in render:', products, 'Selected category:', selectedCategory)}
+          {products && products.length > 0 ? (
+            products
+              .filter(product => !selectedCategory || product.category === selectedCategory)
+              .map((product) => (
+                <Grid item xs={12} sm={6} md={4} key={product.id}>
+                  <Card 
+                    onClick={() => handleOpenDialog(product)}
+                    className="product-card"
+                    sx={{ 
+                      height: '100%', 
+                      display: 'flex', 
+                      flexDirection: 'column',
+                      m: 1
+                    }}
+                  >
+                    {product.imageUrl && (
+                      <CardMedia
+                        component="img"
+                        height="200"
+                        image={product.imageUrl}
+                        alt={product.name}
+                        className="product-image"
+                        sx={{ objectFit: 'cover' }}
+                      />
+                    )}
+                    <CardContent sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
+                      <Typography variant="h6" gutterBottom>
+                        {product.name}
+                      </Typography>
+                      <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+                        {product.description}
+                      </Typography>
+                      <Box sx={{ mt: 'auto' }}>
+                        <Typography variant="subtitle1" className="product-price" sx={{ fontWeight: 'bold' }}>
+                          {product.price} supportshare
+                        </Typography>
+                        <Typography variant="caption" display="block" className="product-creator">
+                          By {product.creatorName}
+                        </Typography>
+                      </Box>
+                    </CardContent>
+                  </Card>
+                </Grid>
+              ))
+          ) : (
+            <Grid item xs={12}>
+              <Typography variant="body1" align="center">
+                Nessun prodotto disponibile
+              </Typography>
+            </Grid>
+          )}
         </Grid>
       )}
 
@@ -168,10 +243,15 @@ export default function Shop() {
           <Button 
             variant="contained" 
             color="primary"
-            onClick={() => {
-              // TODO: Implement purchase logic
-              console.log('Purchase clicked for product:', selectedProduct?.id);
-              handleCloseDialog();
+            onClick={async () => {
+              if (selectedProduct) {
+                try {
+                  await ShopService.purchaseProduct(selectedProduct.id);
+                  handleCloseDialog();
+                } catch (err) {
+                  setError(err instanceof Error ? err.message : 'Failed to purchase product');
+                }
+              }
             }}
           >
             Acquista
@@ -180,4 +260,6 @@ export default function Shop() {
       </Dialog>
     </Box>
   );
-}
+};
+
+export default Shop;

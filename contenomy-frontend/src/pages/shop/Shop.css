@@ -1,0 +1,61 @@
+.shop-container {
+  padding: 24px;
+}
+
+.shop-category-filter {
+  margin: 16px 0;
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+.shop-category-filter .MuiFormControl-root {
+  min-width: 200px;
+  width: 100%;
+  max-width: 300px;
+}
+
+.shop-header {
+  margin-bottom: 24px;
+}
+
+.shop-grid {
+  margin-top: 16px;
+}
+
+.product-card {
+  cursor: pointer;
+  transition: box-shadow 0.3s ease-in-out;
+}
+
+.product-card:hover {
+  box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.1);
+}
+
+.product-image {
+  width: 100%;
+  height: auto;
+  max-height: 300px;
+  object-fit: cover;
+  border-radius: 4px;
+  margin-bottom: 16px;
+}
+
+.product-price {
+  color: #1976d2;
+  font-weight: 500;
+}
+
+.product-creator {
+  color: rgba(0, 0, 0, 0.6);
+  font-size: 0.875rem;
+}
+
+.dialog-image {
+  width: 100%;
+  height: auto;
+  max-height: 300px;
+  object-fit: cover;
+  border-radius: 4px;
+  margin-bottom: 16px;
+}
