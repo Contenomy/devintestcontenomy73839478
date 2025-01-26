@@ -1,6 +1,7 @@
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { environment } from '@environment/environment.development';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Button } from 'react-bootstrap';
@@ -26,7 +27,7 @@ const PaymentConfirmation = () => {
     }
 
     try {
-      const response = await fetch('https://localhost:7126/api/OrderBook/PlaceOrder', {
+      const response = await fetch(`${environment.serverUrl}/api/OrderBook/PlaceOrder`, {
         credentials: 'include',
         method: 'POST',
         headers: {

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { environment } from '@environment/environment.development';
 import './CheckRegistration.css';
 import {Box,Button,TextField,Typography,Select,FormControl,InputLabel,MenuItem,Checkbox,FormControlLabel, Link,SelectChangeEvent} from "@mui/material";
 
@@ -45,7 +46,7 @@ const CheckRegPage: React.FC = () => {
   // Function to check registration
   const checkRegistration = async () => {
     try {
-      const response = await fetch('https://localhost:7126/api/Account/checkRegistration', {
+      const response = await fetch(`${environment.serverUrl}/api/Account/checkRegistration`, {
         credentials: 'include',
         method: 'GET',
         headers: {
@@ -114,7 +115,7 @@ const CheckRegPage: React.FC = () => {
   const handleRegSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await fetch('https://localhost:7126/api/Account/completeRegistration', {
+      const response = await fetch(`${environment.serverUrl}/api/Account/completeRegistration`, {
         credentials: 'include',
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

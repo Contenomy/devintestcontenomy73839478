@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { Box, Typography, CircularProgress, Alert, Pagination, IconButton, Tooltip, Paper } from '@mui/material';
+import { environment } from '@environment/environment.development';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import InvestmentSummary from './components/InvestmentSummary';
@@ -50,7 +51,7 @@ export function Wallet() {
     try {
       setLoading(true);
       setError(null);
-      const response = await fetch('https://localhost:7126/Wallet/GetWalletEntries', {
+      const response = await fetch(`${environment.serverUrl}/Wallet/GetWalletEntries`, {
         credentials: 'include' 
       });
       if (!response.ok) {
@@ -73,7 +74,7 @@ export function Wallet() {
 
   const fetchWallet = async () => {
     try {
-      const response = await fetch('https://localhost:7126/api/Account/UserWallet', {
+      const response = await fetch(`${environment.serverUrl}/api/Account/UserWallet`, {
         credentials: 'include',
         method: 'GET',
         headers: {
