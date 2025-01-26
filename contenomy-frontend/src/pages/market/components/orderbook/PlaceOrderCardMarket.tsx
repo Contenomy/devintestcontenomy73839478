@@ -33,7 +33,8 @@ const PlaceOrderCardMarket: React.FC<PlaceOrderCardProps> = ({ creatorAssetId, o
       creatorAssetId: creatorAssetId,
       type: 'Market',
       direction: isBuyOrder ? 'Buy' : 'Sell',
-      quantity: quantity
+      quantity: quantity,
+      price: currentPrice
     };
 
     try {

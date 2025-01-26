@@ -77,6 +77,12 @@ namespace Contenomy.API.Controllers
             {
                 return BadRequest(ModelState);
             }
+
+            if (orderDTO.Price <= 0)
+            {
+                return BadRequest("Il prezzo dell'ordine deve essere maggiore di zero.");
+            }
+
             var creators = _context.CreatorAssets.Where(ca => ca.CreatorId == orderDTO.CreatorAssetId.ToString());
 
             var creatorAsset = await _context.CreatorAssets.FirstOrDefaultAsync(ca => ca.Id == orderDTO.CreatorAssetId);
