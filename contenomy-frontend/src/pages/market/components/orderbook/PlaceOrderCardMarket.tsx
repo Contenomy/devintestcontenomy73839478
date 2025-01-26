@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Card, CardContent, Typography, Switch, TextField, Button, Box, IconButton, Tooltip } from '@mui/material';
 import InfoIcon from '@mui/icons-material/Info';
 import { useTranslation } from 'react-i18next';
+import { environment } from '@environment/environment.development';
 import './PlaceOrderCardMarket.css';
 
 interface PlaceOrderCardProps {
@@ -32,11 +33,12 @@ const PlaceOrderCardMarket: React.FC<PlaceOrderCardProps> = ({ creatorAssetId, o
       creatorAssetId: creatorAssetId,
       type: 'Market',
       direction: isBuyOrder ? 'Buy' : 'Sell',
-      quantity: quantity
+      quantity: quantity,
+      price: currentPrice
     };
 
     try {
-      const response = await fetch('https://localhost:7126/api/OrderBook/PlaceOrder', {
+      const response = await fetch(`${environment.serverUrl}/api/OrderBook/PlaceOrder`, {
         credentials: 'include',
         method: 'POST',
         headers: {
