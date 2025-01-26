@@ -22,11 +22,7 @@ import {
 import { Edit as EditIcon, Close as DeleteIcon } from '@mui/icons-material';
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 
-enum ProductCategory {
-  Prodotto = "Prodotto",
-  Consulenza = "Consulenza",
-  IncontroInformale = "Incontro informale"
-}
+import { ProductCategory } from '../../types/shop';
 
 interface ProductFormData {
   titolo: string;
