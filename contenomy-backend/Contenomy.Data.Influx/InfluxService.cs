@@ -38,8 +38,8 @@ namespace Contenomy.Data.Influx
 
             return Write(writeApi =>
             {
-                var point = PointData.Measurement("shareValue")
-                    .Tag("creator", creatorId)
+                var point = PointData.Measurement("share_value")
+                    .Tag("creator_id", creatorId)
                     .Field("value", newValue)
                     .Timestamp(DateTime.UtcNow, WritePrecision.Ms);
                 writeApi.WritePointAsync(point, _bucket, _org).Wait();
@@ -64,7 +64,7 @@ namespace Contenomy.Data.Influx
 
             var query = $"from(bucket: \"{_bucket}\")\n" +
                 filter+
-                $"|> filter(fn: (r) => r._measurement == \"shareValue\" and r.creator == \"{creatorId}\")\n" +
+                $"|> filter(fn: (r) => r._measurement == \"share_value\" and r.creator_id == \"{creatorId}\")\n" +
                 $"|> aggregateWindow(every: {aggregation}, fn: mean, createEmpty: true)\n" +
                 $"|> fill(usePrevious: true)\n" +
                 $"|> filter(fn: (r) => exists r._value)";

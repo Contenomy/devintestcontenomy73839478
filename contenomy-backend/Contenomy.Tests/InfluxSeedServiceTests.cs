@@ -16,15 +16,30 @@ namespace Contenomy.Tests
         private InfluxSeedService _seedService;
         private const string TEST_CREATOR_ID = "test-creator-123";
 
+        /// <summary>
+        /// Required environment variables for tests:
+        /// - INFLUX_TOKEN: InfluxDB authentication token
+        /// - INFLUX_SERVER: InfluxDB server URL (defaults to http://localhost:8086)
+        /// - INFLUX_BUCKET: InfluxDB bucket name (defaults to contenomy)
+        /// - INFLUX_ORG: InfluxDB organization name (defaults to contenomy)
+        /// </summary>
         [TestInitialize]
         public void Setup()
         {
-            // Using the same configuration as the main application
+            var token = Environment.GetEnvironmentVariable("INFLUX_TOKEN");
+            if (string.IsNullOrEmpty(token))
+            {
+                throw new InvalidOperationException(
+                    "INFLUX_TOKEN environment variable is required for tests. " +
+                    "Please set this variable with your InfluxDB authentication token."
+                );
+            }
+
             _influxService = new InfluxService(
-                "GoUyhst0HGOYj7S1BRrsAZ54cFKZidsl1bvBVtCfJqvReq6X_ARWybe2Y97KzllzFYimNMObyn-zCBt-t4k2lg==",
-                "http://localhost:8086",
-                "contenomy",
-                "contenomy"
+                token,
+                Environment.GetEnvironmentVariable("INFLUX_SERVER") ?? "http://localhost:8086",
+                Environment.GetEnvironmentVariable("INFLUX_BUCKET") ?? "contenomy",
+                Environment.GetEnvironmentVariable("INFLUX_ORG") ?? "contenomy"
             );
             _seedService = new InfluxSeedService(_influxService);
         }

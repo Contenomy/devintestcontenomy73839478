@@ -2,7 +2,6 @@ import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { Box, Typography, CircularProgress, Alert, Pagination, IconButton, Tooltip, Paper } from '@mui/material';
 import { environment } from '@environment/environment.development';
 import { useTranslation } from 'react-i18next';
-import { environment } from '@environment/environment.development';
 import { Link } from 'react-router-dom';
 import InvestmentSummary from './components/InvestmentSummary';
 import SupportSharesList from './components/SupportSharesList';

@@ -59,7 +59,7 @@ namespace Contenomy.API
             {
                 var config = serviceProvider.GetRequiredService<IConfiguration>().GetSection("InfluxConfig");
 
-                return new InfluxService(config["Token"], "http://" + config["Address"] + ":" + config["Port"], config["Bucket"], config["Organization"]);
+                return new InfluxService(config["Token"], config["Server"], config["Bucket"], config["Org"]);
             });
 
             // CORS configuration
