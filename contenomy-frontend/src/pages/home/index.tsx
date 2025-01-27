@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { environment } from '@environment/environment.development';
 import { ContentCreatorInfo } from '@model/ContentCreatorInfo';
-import { environment } from '@environment/environment.development';
 import './home.css';
 
 const CreatorCard = ({ creator }: { creator: ContentCreatorInfo }) => {

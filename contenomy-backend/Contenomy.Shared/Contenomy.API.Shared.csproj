@@ -12,6 +12,7 @@
 
 	<ItemGroup>
 	  <ProjectReference Include="..\Contenomy.Data\Contenomy.Data.csproj" />
+	  <ProjectReference Include="..\Contenomy.Data.Influx\Contenomy.Data.Influx.csproj" />
 	</ItemGroup>
 
 </Project>

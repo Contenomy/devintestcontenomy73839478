@@ -36,7 +36,9 @@ export default function useFetch<T>(endpoint: string, initialData: T): [T, boole
 
             }
             catch (err) {
-                console.log("Fetch error", err);
+                console.error("Fetch error", err);
+                setData(initialData);
+                setLoaded(true);
             }
         }
 

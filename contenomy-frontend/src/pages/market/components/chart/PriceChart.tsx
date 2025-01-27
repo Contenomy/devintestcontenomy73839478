@@ -32,6 +32,13 @@ const PriceChart: React.FC<PriceChartProps> = ({ creatorId, width = 800, height 
 
   const [res, loading] = useFetch(`${environment.serverUrl}/api/PriceHistory/trend/${creatorId}?period=${timeRangeValue}`, emptyData);
 
+  useEffect(() => {
+    console.log('Price data:', res);
+    console.log('Loading:', loading);
+    console.log('Time range:', timeRangeValue);
+    window.chartData = res;
+  }, [res, loading, timeRangeValue]);
+
   // useEffect(() => {
   //   // const sampleData = {
   //   //   '1G': {
@@ -111,7 +118,7 @@ const PriceChart: React.FC<PriceChartProps> = ({ creatorId, width = 800, height 
             }
           }
         ]}
-        dataset={res.map(f => { f.timestamp = new Date(f.timestamp); return f; })}
+        dataset={Array.isArray(res) ? res.map(f => ({ ...f, timestamp: new Date(f.timestamp) })) : []}
         width={width}
         height={height}
       />
