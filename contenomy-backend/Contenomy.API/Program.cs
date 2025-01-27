@@ -96,7 +96,8 @@ namespace Contenomy.API
                 DBInitializer.AddRoles(scopedServiceProvider.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>()).Wait();
                 if (app.Environment.IsDevelopment())
                 {
-                    DBInitializer.InitializeTestEnvironment(db, userManager).Wait();
+                    var influxService = scopedServiceProvider.ServiceProvider.GetRequiredService<InfluxService>();
+                    DBInitializer.InitializeTestEnvironment(db, userManager, influxService).Wait();
                     DBInitializer.AddDeveloper(userManager).Wait();
                 }
             }

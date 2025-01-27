@@ -30,6 +30,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Contenomy.Email", "Contenom
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Contenomy.Data.Influx.Test", "Test\Contenomy.Data.Influx.Test\Contenomy.Data.Influx.Test.csproj", "{1C540284-A87D-49A5-8217-4305D35CF694}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Contenomy.Tests", "Contenomy.Tests\Contenomy.Tests.csproj", "{EE2826F7-D1B9-4298-910B-A07E25563359}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -72,6 +74,10 @@ Global
 		{1C540284-A87D-49A5-8217-4305D35CF694}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1C540284-A87D-49A5-8217-4305D35CF694}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1C540284-A87D-49A5-8217-4305D35CF694}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EE2826F7-D1B9-4298-910B-A07E25563359}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE2826F7-D1B9-4298-910B-A07E25563359}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE2826F7-D1B9-4298-910B-A07E25563359}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EE2826F7-D1B9-4298-910B-A07E25563359}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
