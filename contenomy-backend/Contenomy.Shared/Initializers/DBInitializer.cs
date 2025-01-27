@@ -1,5 +1,6 @@
 using Contenomy.Data;
 using Contenomy.Data.Entities;
+using Contenomy.Data.Influx;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
@@ -22,7 +23,7 @@ namespace Contenomy.API.Shared.Initializers
             }
         }
 
-        public static async Task InitializeTestEnvironment(ContenomyDbContext dbContext, UserManager<ContenomyUser> userManager)
+        public static async Task InitializeTestEnvironment(ContenomyDbContext dbContext, UserManager<ContenomyUser> userManager, InfluxService influxService)
         {
             if (dbContext == null)
             {
@@ -82,6 +83,10 @@ namespace Contenomy.API.Shared.Initializers
                 {
                     await AddClaim(contenomyUser, userManager, "SocialRole", "Creator");
                     await CreateAsset(dbContext, contenomyUser, user.AssetCap, user.Value);
+                    
+                    // Seed historical price data in InfluxDB
+                    var influxSeedService = new InfluxSeedService(influxService);
+                    await influxSeedService.SeedHistoricalDataForCreator(contenomyUser.Id, user.Value);
                 }
                 else
                 {
